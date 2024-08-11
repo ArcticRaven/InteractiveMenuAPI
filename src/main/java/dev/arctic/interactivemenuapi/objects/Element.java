@@ -7,6 +7,7 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.TextDisplay;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import static net.kyori.adventure.text.format.Style.style;
@@ -33,6 +34,7 @@ public abstract class Element {
     protected void initializeEntities() {
         this.interactionEntity = location.getWorld().spawn(location, Interaction.class, interaction -> {
             interaction.setPersistent(false);
+            interaction.setMetadata("InteractiveMenu", new FixedMetadataValue(parentMenu.getPlugin(), this));
         });
 
         this.textDisplayEntity = location.getWorld().spawn(location, TextDisplay.class, textDisplay -> {
