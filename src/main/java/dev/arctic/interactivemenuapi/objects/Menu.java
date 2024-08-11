@@ -64,10 +64,6 @@ public class Menu implements IMenu {
         return (System.currentTimeMillis() / 1000 - lastInteractionTime) >= timeoutSeconds;
     }
 
-    public void updateAnchorLocation() {
-        // To be overridden by child classes for specific rotation logic
-    }
-
     public void updateMenuLocation() {
         for (Division division : divisions) {
             division.updateLocation(anchorEntity.getLocation());
@@ -78,7 +74,6 @@ public class Menu implements IMenu {
         updateTask = new BukkitRunnable() {
             @Override
             public void run() {
-                updateAnchorLocation();
                 updateMenuLocation();
             }
         }.runTaskTimer(plugin, 0L, 5L); // Update every 5 ticks

@@ -39,11 +39,6 @@ public interface IMenu {
     void createAnchor(Vector spawnOffset);
 
     /**
-     * Updates the anchor entity's location.
-     */
-    void updateAnchorLocation();
-
-    /**
      * Updates the locations of all divisions within this menu.
      */
     void updateMenuLocation();

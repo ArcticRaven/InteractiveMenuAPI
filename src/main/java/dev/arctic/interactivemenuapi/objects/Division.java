@@ -51,7 +51,7 @@ public class Division implements IDivision {
         }
     }
 
-    private Vector getAdjustedOffset(Location rootLocation, Vector offset, float yaw) {
+    private Vector getAdjustedOffset(Location anchorLocation, Vector offset, float yaw) {
         yaw = (yaw % 360 + 360) % 360;
 
         double x = offset.getX();
@@ -77,14 +77,14 @@ public class Division implements IDivision {
     }
 
     public Menu getParentMenu() {
-        return null;
+        return this.ownerMenu;
     }
 
     public void setParentMenu(Menu parentMenu) {
-
+        this.ownerMenu = parentMenu;
     }
 
     public void addElement(Element element) {
-
+        this.elements.add(element);
     }
 }
