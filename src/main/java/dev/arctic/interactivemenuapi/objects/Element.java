@@ -1,5 +1,6 @@
 package dev.arctic.interactivemenuapi.objects;
 
+import dev.arctic.interactivemenuapi.interfaces.IElement;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
@@ -14,7 +15,7 @@ import static net.kyori.adventure.text.format.Style.style;
 
 @Getter
 @Setter
-public abstract class Element {
+public abstract class Element implements IElement {
 
     protected Menu parentMenu;
     protected Division parentDivision;
@@ -69,6 +70,4 @@ public abstract class Element {
     }
 
     public abstract void onInteract();
-
-    public abstract void applyAnimation();
 }

@@ -14,6 +14,7 @@ public class ToggleElementBuilder {
     private Vector offset;
     private AnimationType pressAnimationType = AnimationType.NONE;
     private double pressAnimationStepper = 0.0;
+    private int duration;
     private Component primaryText;
     private Component secondaryText;
 
@@ -42,6 +43,11 @@ public class ToggleElementBuilder {
         return this;
     }
 
+    public ToggleElementBuilder setDuration(int duration) {
+        this.duration = duration;
+        return this;
+    }
+
     public ToggleElementBuilder setPrimaryText(Component primaryText) {
         this.primaryText = primaryText;
         return this;
@@ -51,8 +57,8 @@ public class ToggleElementBuilder {
         this.secondaryText = secondaryText;
         return this;
     }
-    public IToggleElement build() {
-        return (IToggleElement) new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper, primaryText, secondaryText);
+    public ToggleElement build() {
+        return new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper, primaryText, secondaryText, duration);
     }
 }
 

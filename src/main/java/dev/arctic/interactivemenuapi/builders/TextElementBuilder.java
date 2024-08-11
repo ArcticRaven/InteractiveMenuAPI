@@ -34,11 +34,11 @@ public class TextElementBuilder {
         return this;
     }
 
-    public ITextElement build() {
+    public TextElement build() {
         TextElement textElement = new TextElement(parentMenu, parentDivision, offset);
         if (text != null) {
             textElement.setText(text);
         }
-        return (ITextElement) textElement;
+        return textElement;
     }
 }

@@ -16,8 +16,9 @@ public class DivisionBuilder {
     private Menu parentMenu;
     private Location initialLocation;
     private Vector offset;
-    private AnimationType animationType = AnimationType.NONE;
+    private AnimationType animationType;
     private double animationStepper = 0.0;
+    private int duration;
     private List<Element> elements = new CopyOnWriteArrayList<>();
 
     public DivisionBuilder setParentMenu(Menu parentMenu) {
@@ -55,9 +56,14 @@ public class DivisionBuilder {
         return this;
     }
 
-    public IDivision build() {
-        Division division = new Division(parentMenu, initialLocation, offset, animationType, animationStepper);
+    public DivisionBuilder setDuration(int duration) {
+        this.duration = duration;
+        return this;
+    }
+
+    public Division build() {
+        Division division = new Division(parentMenu, initialLocation, offset, animationType, animationStepper, duration);
         division.setElements(elements);
-        return (IDivision) division;
+        return division;
     }
 }

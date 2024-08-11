@@ -74,7 +74,7 @@ public class MenuBuilder {
         return this;
     }
 
-    public IMenu build() {
+    public Menu build() {
         Menu menu = new Menu(rootLocation, timeoutSeconds, plugin);
         menu.setOwner(owner);
         menu.setAnchorEntity(anchorEntity);
@@ -83,6 +83,6 @@ public class MenuBuilder {
         menu.setMenuUUID(menuUUID);
         menu.setLastInteractionTime(lastInteractionTime);
         menu.setDoCleanup(doCleanup);
-        return (IMenu) menu;
+        return menu;
     }
 }

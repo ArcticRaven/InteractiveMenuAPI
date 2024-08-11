@@ -44,5 +44,5 @@ public interface IToggleElement extends IElement {
     /**
      * Applies the animation for the toggle element based on its current state.
      */
-    void applyAnimation();
+    void applyAnimation(int duration);
 }

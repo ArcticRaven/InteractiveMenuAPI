@@ -29,11 +29,6 @@ public interface IElement {
     void onInteract();
 
     /**
-     * Applies any necessary animations to the element.
-     */
-    void applyAnimation();
-
-    /**
      * Gets the parent menu of this element.
      *
      * @return The parent menu.

@@ -2,6 +2,7 @@ package dev.arctic.interactivemenuapi.objects;
 
 import dev.arctic.interactivemenuapi.animation.Animation;
 import dev.arctic.interactivemenuapi.animation.AnimationType;
+import dev.arctic.interactivemenuapi.interfaces.IDivision;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
@@ -12,31 +13,32 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 @Setter
-public class Division {
+public class Division implements IDivision {
 
     protected Menu ownerMenu;
     protected Location currentLocation;
     protected Vector offset;
     protected AnimationType animationType;
     protected double animationStepper;
+    protected int duration;
     protected List<Element> elements = new CopyOnWriteArrayList<>();
 
-    public Division(Menu ownerMenu, Location initialLocation, Vector offset, AnimationType animationType, double animationStepper) {
+    public Division(Menu ownerMenu, Location initialLocation, Vector offset, AnimationType animationType, double animationStepper, int duration) {
         this.ownerMenu = ownerMenu;
         this.currentLocation = initialLocation;
         this.offset = offset;
         this.animationType = animationType;
         this.animationStepper = animationStepper;
+        this.duration = duration;
     }
 
     public void updateLocation(Location rootMenuLocation) {
         Location newLocation = rootMenuLocation.clone().add(offset);
 
         if (animationType != AnimationType.NONE) {
-            Animation animation = new Animation(animationType, animationStepper);
+            Animation animation = new Animation(animationType, animationStepper, duration);
             Animation.AnimationResult result = animation.apply();
             newLocation.add(result.vectorChange());
-            // Additional logic for handling opacity can be implemented here if needed
         }
 
         this.currentLocation = newLocation;
@@ -51,5 +53,17 @@ public class Division {
             element.cleanup();
         }
         elements.clear();
+    }
+
+    public Menu getParentMenu() {
+        return null;
+    }
+
+    public void setParentMenu(Menu parentMenu) {
+
+    }
+
+    public void addElement(Element element) {
+
     }
 }

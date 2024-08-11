@@ -46,7 +46,7 @@ public class OverlayElementBuilder {
         return this;
     }
 
-    public IOverlayElement build() {
-        return (IOverlayElement) new OverlayElement(parentMenu, parentDivision, offset, interactToRemove, displayDuration, text);
+    public OverlayElement build() {
+        return new OverlayElement(parentMenu, parentDivision, offset, interactToRemove, displayDuration, text);
     }
 }

@@ -35,8 +35,8 @@ public class DisplayElementBuilder {
         return this;
     }
 
-    public IDisplayElement build() {
+    public DisplayElement build() {
 
-        return (IDisplayElement) new DisplayElement(parentMenu, parentDivision, offset, displayItem);
+        return new DisplayElement(parentMenu, parentDivision, offset, displayItem);
     }
 }

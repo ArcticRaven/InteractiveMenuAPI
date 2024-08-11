@@ -1,14 +1,16 @@
 package dev.arctic.interactivemenuapi.objects.elements;
 
+import dev.arctic.interactivemenuapi.interfaces.IOverlayElement;
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Element;
 import dev.arctic.interactivemenuapi.objects.Menu;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
-public class OverlayElement extends Element {
+public class OverlayElement extends Element implements IOverlayElement {
 
     private boolean interactToRemove;
     private long displayDuration;
@@ -45,7 +47,39 @@ public class OverlayElement extends Element {
         textDisplayEntity.text(text);
     }
 
+
     @Override
-    public void applyAnimation() {
+    public Location getCurrentLocation() {
+        return this.location;
+    }
+
+    @Override
+    public void setCurrentLocation(Location currentLocation) {
+        this.location = currentLocation;
+    }
+
+    @Override
+    public boolean isInteractToRemove() {
+        return this.interactToRemove;
+    }
+
+    @Override
+    public void setInteractToRemove(boolean interactToRemove) {
+        this.interactToRemove = interactToRemove;
+    }
+
+    @Override
+    public long getDisplayDuration() {
+        return this.displayDuration;
+    }
+
+    @Override
+    public void setDisplayDuration(long displayDuration) {
+        this.displayDuration = displayDuration;
+    }
+
+    @Override
+    public void setText(Component text) {
+        textDisplayEntity.text(text);
     }
 }

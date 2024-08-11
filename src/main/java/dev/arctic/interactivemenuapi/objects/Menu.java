@@ -1,5 +1,6 @@
 package dev.arctic.interactivemenuapi.objects;
 
+import dev.arctic.interactivemenuapi.interfaces.IMenu;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
@@ -16,7 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 @Setter
-public class Menu {
+public class Menu implements IMenu {
 
     //Objects
     protected Player owner;
@@ -50,7 +51,7 @@ public class Menu {
         startCleanupTask();
     }
 
-    protected void createAnchor(Vector spawnOffset) {
+    public void createAnchor(Vector spawnOffset) {
         if (rootLocation.getWorld() == null) return;
         anchorEntity = rootLocation.getWorld().spawn(rootLocation.add(spawnOffset), Interaction.class, interaction -> {
             interaction.setInteractionWidth(0f);
@@ -63,17 +64,17 @@ public class Menu {
         return (System.currentTimeMillis() / 1000 - lastInteractionTime) >= timeoutSeconds;
     }
 
-    protected void updateAnchorLocation() {
+    public void updateAnchorLocation() {
         // To be overridden by child classes for specific rotation logic
     }
 
-    protected void updateMenuLocation() {
+    public void updateMenuLocation() {
         for (Division division : divisions) {
             division.updateLocation(anchorEntity.getLocation());
         }
     }
 
-    protected void startRunnableUpdateGUI() {
+    public void startRunnableUpdateGUI() {
         updateTask = new BukkitRunnable() {
             @Override
             public void run() {
@@ -83,7 +84,7 @@ public class Menu {
         }.runTaskTimer(plugin, 0L, 5L); // Update every 5 ticks
     }
 
-    protected void startCleanupTask() {
+    public void startCleanupTask() {
         if (!doCleanup) return;
         new BukkitRunnable() {
             @Override
@@ -112,5 +113,9 @@ public class Menu {
         if (updateTask != null) {
             updateTask.cancel();
         }
+    }
+
+    public void addDivision(Division division) {
+        divisions.add(division);
     }
 }

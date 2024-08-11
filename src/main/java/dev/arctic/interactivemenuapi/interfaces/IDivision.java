@@ -31,11 +31,6 @@ public interface IDivision {
     void updateLocation(Location rootMenuLocation);
 
     /**
-     * Applies the division's animation based on its current animation type and stepper.
-     */
-    void applyAnimation();
-
-    /**
      * Cleans up the division by removing all its elements and releasing resources.
      */
     void cleanup();
