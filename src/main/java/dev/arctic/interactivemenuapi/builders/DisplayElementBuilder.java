@@ -1,12 +1,10 @@
 package dev.arctic.interactivemenuapi.builders;
 
-import dev.arctic.interactivemenuapi.interfaces.IDisplayElement;
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
 import dev.arctic.interactivemenuapi.objects.elements.DisplayElement;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import org.bukkit.entity.ItemDisplay;
 
 public class DisplayElementBuilder {
 

@@ -33,7 +33,10 @@ public class Division implements IDivision {
     }
 
     public void updateLocation(Location rootMenuLocation) {
-        Location newLocation = rootMenuLocation.clone().add(offset);
+        float yaw = rootMenuLocation.getYaw();
+        Vector adjustedOffset = getAdjustedOffset(rootMenuLocation, offset, yaw);
+
+        Location newLocation = rootMenuLocation.clone().add(adjustedOffset);
 
         if (animationType != AnimationType.NONE) {
             Animation animation = new Animation(animationType, animationStepper, duration);
@@ -45,6 +48,24 @@ public class Division implements IDivision {
 
         for (Element element : elements) {
             element.updateLocation(newLocation);
+        }
+    }
+
+    private Vector getAdjustedOffset(Location rootLocation, Vector offset, float yaw) {
+        yaw = (yaw % 360 + 360) % 360;
+
+        double x = offset.getX();
+        double y = offset.getY();
+        double z = offset.getZ();
+
+        if (yaw >= 315 || yaw < 45) {
+            return new Vector(x, y, z);
+        } else if (yaw >= 45 && yaw < 135) {
+            return new Vector(-z, y, x);
+        } else if (yaw >= 135 && yaw < 225) {
+            return new Vector(-x, y, -z);
+        } else {
+            return new Vector(z, y, -x);
         }
     }
 

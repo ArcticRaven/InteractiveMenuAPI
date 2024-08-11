@@ -11,8 +11,6 @@ import org.bukkit.entity.TextDisplay;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
-import static net.kyori.adventure.text.format.Style.style;
-
 @Getter
 @Setter
 public abstract class Element implements IElement {
@@ -56,7 +54,7 @@ public abstract class Element implements IElement {
             if (opacity == 0) {
                 textDisplayEntity.text(Component.text(" "));
             }
-            textDisplayEntity.setBackgroundColor(Color.fromARGB(opacity,0,0,0));
+            textDisplayEntity.setBackgroundColor(Color.fromARGB(opacity, 0, 0, 0));
         }
     }
 
@@ -66,6 +64,24 @@ public abstract class Element implements IElement {
         }
         if (textDisplayEntity != null && !textDisplayEntity.isDead()) {
             textDisplayEntity.remove();
+        }
+    }
+
+    protected Vector getAdjustedOffset(Location rootLocation, Vector offset, float yaw) {
+        yaw = (yaw % 360 + 360) % 360;
+
+        double x = offset.getX();
+        double y = offset.getY();
+        double z = offset.getZ();
+
+        if (yaw >= 315 || yaw < 45) {
+            return new Vector(x, y, z);
+        } else if (yaw >= 45 && yaw < 135) {
+            return new Vector(-z, y, x);
+        } else if (yaw >= 135 && yaw < 225) {
+            return new Vector(-x, y, -z);
+        } else {
+            return new Vector(z, y, -x);
         }
     }
 
