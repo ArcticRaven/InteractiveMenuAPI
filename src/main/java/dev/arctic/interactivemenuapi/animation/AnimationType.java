@@ -8,5 +8,6 @@ public enum AnimationType{
     DOWN,
     VISIBILITY,
     FORWARD,
-    BACKWARD
+    BACKWARD,
+    PRESSED
 }

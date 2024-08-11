@@ -1,9 +1,9 @@
 package dev.arctic.interactivemenuapi.builders;
 
-import dev.arctic.interactivemenuapi.interfaces.IOverlayElement;
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
 import dev.arctic.interactivemenuapi.objects.elements.OverlayElement;
+import net.kyori.adventure.text.Component;
 import org.bukkit.util.Vector;
 
 public class OverlayElementBuilder {
@@ -13,6 +13,7 @@ public class OverlayElementBuilder {
     private Vector offset;
     private boolean interactToRemove = false;
     private long displayDuration = 0L;
+    private Component text;
 
     public OverlayElementBuilder setParentMenu(Menu parentMenu) {
         this.parentMenu = parentMenu;
@@ -39,7 +40,12 @@ public class OverlayElementBuilder {
         return this;
     }
 
-    public IOverlayElement build() {
-        return (IOverlayElement) new OverlayElement(parentMenu, parentDivision, offset, interactToRemove, displayDuration);
+    public OverlayElementBuilder setText(Component text){
+        this.text = text;
+        return this;
+    }
+
+    public OverlayElement build() {
+        return new OverlayElement(parentMenu, parentDivision, offset, interactToRemove, displayDuration, text);
     }
 }

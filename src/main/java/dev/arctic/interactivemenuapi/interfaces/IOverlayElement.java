@@ -1,5 +1,7 @@
 package dev.arctic.interactivemenuapi.interfaces;
 
+import net.kyori.adventure.text.Component;
+
 /**
  * Interface representing an Overlay Element in the Interactive Menu API.
  * Overlay Elements are layered in front of other elements and can either be timed or interactively removed.
@@ -33,4 +35,11 @@ public interface IOverlayElement extends IElement {
      * @param displayDuration The display duration in ticks.
      */
     void setDisplayDuration(long displayDuration);
+
+    /**
+     * Sets the text for the overlay element.
+     *
+     * @param text The text to display.
+     */
+    void setText(Component text);
 }

@@ -4,6 +4,7 @@ import dev.arctic.interactivemenuapi.interfaces.*;
 import dev.arctic.interactivemenuapi.objects.*;
 import dev.arctic.interactivemenuapi.animation.AnimationType;
 import dev.arctic.interactivemenuapi.objects.elements.ToggleElement;
+import net.kyori.adventure.text.Component;
 import org.bukkit.util.Vector;
 
 public class ToggleElementBuilder {
@@ -13,6 +14,8 @@ public class ToggleElementBuilder {
     private Vector offset;
     private AnimationType pressAnimationType = AnimationType.NONE;
     private double pressAnimationStepper = 0.0;
+    private Component primaryText;
+    private Component secondaryText;
 
     public ToggleElementBuilder setParentMenu(Menu parentMenu) {
         this.parentMenu = parentMenu;
@@ -39,8 +42,17 @@ public class ToggleElementBuilder {
         return this;
     }
 
-    public IToggleElement build() {
-        return (IToggleElement) new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper);
+    public ToggleElementBuilder setPrimaryText(Component primaryText) {
+        this.primaryText = primaryText;
+        return this;
+    }
+
+    public ToggleElementBuilder setSecondaryText(Component secondaryText) {
+        this.secondaryText = secondaryText;
+        return this;
+    }
+    public ToggleElement build() {
+        return new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper, primaryText, secondaryText);
     }
 }
 

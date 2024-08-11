@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/InteractiveMenuAPI.iml" filepath="$PROJECT_DIR$/.idea/InteractiveMenuAPI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/InteractiveMenuAPI.main.iml" filepath="$PROJECT_DIR$/.idea/modules/InteractiveMenuAPI.main.iml" />
     </modules>
   </component>
 </project>

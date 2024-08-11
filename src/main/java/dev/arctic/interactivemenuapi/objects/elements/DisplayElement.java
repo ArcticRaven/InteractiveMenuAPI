@@ -10,6 +10,7 @@ import org.bukkit.entity.ItemDisplay;
 public class DisplayElement extends Element {
 
     private ItemStack displayItem;
+    private ItemDisplay displayEntity;
 
     public DisplayElement(Menu parentMenu, Division parentDivision, Vector offset, ItemStack displayItem) {
         super(parentMenu, parentDivision, offset);
@@ -22,6 +23,12 @@ public class DisplayElement extends Element {
             item.setItemStack(displayItem);
             item.setPersistent(false);
         });
+        displayEntity = itemDisplay;
+    }
+
+    public void changeDisplayItem(ItemStack newItem){
+        displayItem = newItem;
+        displayEntity.setItemStack(displayItem);
     }
 
     @Override

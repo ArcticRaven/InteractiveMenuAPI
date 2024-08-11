@@ -6,6 +6,7 @@ import dev.arctic.interactivemenuapi.objects.Menu;
 import dev.arctic.interactivemenuapi.objects.elements.DisplayElement;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import org.bukkit.entity.ItemDisplay;
 
 public class DisplayElementBuilder {
 
@@ -35,6 +36,7 @@ public class DisplayElementBuilder {
     }
 
     public IDisplayElement build() {
+
         return (IDisplayElement) new DisplayElement(parentMenu, parentDivision, offset, displayItem);
     }
 }

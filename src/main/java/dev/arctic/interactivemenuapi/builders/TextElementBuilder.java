@@ -4,6 +4,7 @@ import dev.arctic.interactivemenuapi.interfaces.ITextElement;
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
 import dev.arctic.interactivemenuapi.objects.elements.TextElement;
+import net.kyori.adventure.text.Component;
 import org.bukkit.util.Vector;
 
 public class TextElementBuilder {
@@ -11,6 +12,7 @@ public class TextElementBuilder {
     private Menu parentMenu;
     private Division parentDivision;
     private Vector offset;
+    private Component text;
 
     public TextElementBuilder setParentMenu(Menu parentMenu) {
         this.parentMenu = parentMenu;
@@ -27,7 +29,16 @@ public class TextElementBuilder {
         return this;
     }
 
-    public ITextElement build() {
-        return (ITextElement) new TextElement(parentMenu, parentDivision, offset);
+    public TextElementBuilder setText(Component text) {
+        this.text = text;
+        return this;
+    }
+
+    public TextElement build() {
+        TextElement textElement = new TextElement(parentMenu, parentDivision, offset);
+        if (text != null) {
+            textElement.setText(text);
+        }
+        return textElement;
     }
 }

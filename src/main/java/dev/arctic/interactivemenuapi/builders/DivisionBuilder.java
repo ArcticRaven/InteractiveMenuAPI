@@ -1,11 +1,14 @@
 package dev.arctic.interactivemenuapi.builders;
 
 import dev.arctic.interactivemenuapi.animation.AnimationType;
-import dev.arctic.interactivemenuapi.interfaces.IDivision;
 import dev.arctic.interactivemenuapi.objects.Division;
+import dev.arctic.interactivemenuapi.objects.Element;
 import dev.arctic.interactivemenuapi.objects.Menu;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DivisionBuilder {
 
@@ -14,6 +17,7 @@ public class DivisionBuilder {
     private Vector offset;
     private AnimationType animationType = AnimationType.NONE;
     private double animationStepper = 0.0;
+    private List<Element> elements = new CopyOnWriteArrayList<>();
 
     public DivisionBuilder setParentMenu(Menu parentMenu) {
         this.parentMenu = parentMenu;
@@ -40,7 +44,19 @@ public class DivisionBuilder {
         return this;
     }
 
-    public IDivision build() {
-        return (IDivision) new Division(parentMenu, initialLocation, offset, animationType, animationStepper);
+    public DivisionBuilder setElements(List<Element> elements) {
+        this.elements = elements;
+        return this;
+    }
+
+    public DivisionBuilder addElement(Element element) {
+        this.elements.add(element);
+        return this;
+    }
+
+    public Division build() {
+        Division division = new Division(parentMenu, initialLocation, offset, animationType, animationStepper);
+        division.setElements(elements);
+        return division;
     }
 }

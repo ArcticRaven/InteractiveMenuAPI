@@ -123,4 +123,11 @@ public interface IDivision {
      * @param elements The list of elements.
      */
     void setElements(List<Element> elements);
+
+    /**
+     * Adds an element to the division.
+     *
+     * @param element The element to add.
+     */
+    void addElement(Element element);
 }
