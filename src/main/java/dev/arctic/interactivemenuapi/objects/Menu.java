@@ -35,11 +35,12 @@ public class Menu {
     private long lastInteractionTime;
     private boolean doCleanup;
 
-    public Menu (Location rootLocation, int timeoutSeconds) {
+    public Menu (Location rootLocation, int timeoutSeconds, Plugin plugin) {
         this.rootLocation = rootLocation;
         this.timeoutSeconds = timeoutSeconds;
         this.lastInteractionTime = System.currentTimeMillis() / 1000;
         this.doCleanup = true;
+        this.plugin = plugin;
         initializeMenu();
     }
 

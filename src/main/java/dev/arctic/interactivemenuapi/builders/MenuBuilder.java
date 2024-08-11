@@ -70,7 +70,7 @@ public class MenuBuilder {
     }
 
     public IMenu build() {
-        Menu menu = new Menu(rootLocation, timeoutSeconds);
+        Menu menu = new Menu(rootLocation, timeoutSeconds, plugin);
         menu.setOwner(owner);
         menu.setAnchorEntity(anchorEntity);
         menu.setPlugin(plugin);
