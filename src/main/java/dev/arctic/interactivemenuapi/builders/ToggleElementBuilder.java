@@ -51,8 +51,8 @@ public class ToggleElementBuilder {
         this.secondaryText = secondaryText;
         return this;
     }
-    public ToggleElement build() {
-        return new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper, primaryText, secondaryText);
+    public IToggleElement build() {
+        return (IToggleElement) new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper, primaryText, secondaryText);
     }
 }
 

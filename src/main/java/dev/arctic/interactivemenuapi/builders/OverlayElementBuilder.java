@@ -1,5 +1,6 @@
 package dev.arctic.interactivemenuapi.builders;
 
+import dev.arctic.interactivemenuapi.interfaces.IOverlayElement;
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
 import dev.arctic.interactivemenuapi.objects.elements.OverlayElement;
@@ -45,7 +46,7 @@ public class OverlayElementBuilder {
         return this;
     }
 
-    public OverlayElement build() {
-        return new OverlayElement(parentMenu, parentDivision, offset, interactToRemove, displayDuration, text);
+    public IOverlayElement build() {
+        return (IOverlayElement) new OverlayElement(parentMenu, parentDivision, offset, interactToRemove, displayDuration, text);
     }
 }

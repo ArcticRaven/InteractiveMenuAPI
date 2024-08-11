@@ -1,6 +1,7 @@
 package dev.arctic.interactivemenuapi.builders;
 
 import dev.arctic.interactivemenuapi.animation.AnimationType;
+import dev.arctic.interactivemenuapi.interfaces.IDivision;
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Element;
 import dev.arctic.interactivemenuapi.objects.Menu;
@@ -54,9 +55,9 @@ public class DivisionBuilder {
         return this;
     }
 
-    public Division build() {
+    public IDivision build() {
         Division division = new Division(parentMenu, initialLocation, offset, animationType, animationStepper);
         division.setElements(elements);
-        return division;
+        return (IDivision) division;
     }
 }
