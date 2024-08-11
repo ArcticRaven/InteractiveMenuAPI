@@ -54,6 +54,11 @@ public class MenuBuilder {
         return this;
     }
 
+    public MenuBuilder addDivision(Division division) {
+        this.divisions.add(division);
+        return this;
+    }
+
     public MenuBuilder setMenuUUID(UUID menuUUID) {
         this.menuUUID = menuUUID;
         return this;

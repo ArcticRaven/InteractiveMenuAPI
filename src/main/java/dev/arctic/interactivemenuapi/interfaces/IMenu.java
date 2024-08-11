@@ -125,6 +125,13 @@ public interface IMenu {
     void setDivisions(List<Division> divisions);
 
     /**
+     * Adds a division to this menu.
+     *
+     * @param division The division to add.
+     */
+    void addDivision(Division division);
+
+    /**
      * Gets the UUID of this menu.
      *
      * @return The UUID.
