@@ -15,6 +15,7 @@ This resource is intended to interact similar to web-design, with complex pages 
 ## Implementation
 
 This API is designed for Spigot and its derivatives. It is currently not available for other server software.
+This API also uses Java 21 and will NOT support any versions earlier than 1.21.x
 
 ### Maven
 ```xml
