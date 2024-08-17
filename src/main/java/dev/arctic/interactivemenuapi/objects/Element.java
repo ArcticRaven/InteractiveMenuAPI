@@ -11,11 +11,12 @@ import org.bukkit.entity.TextDisplay;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 @Getter
 @Setter
-public abstract class Element implements IElement {
+public abstract class Element<T> implements IElement {
 
     protected Menu parentMenu;
     protected Division parentDivision;
@@ -23,7 +24,7 @@ public abstract class Element implements IElement {
     protected Vector offset;
     protected Interaction interactionEntity;
     protected TextDisplay textDisplayEntity;
-    private Consumer<Element> onInteract;
+    private BiConsumer<Element<T>, T> onInteract;
 
     public Element(Menu parentMenu, Division parentDivision, Vector offset) {
         this.parentMenu = parentMenu;
@@ -88,9 +89,9 @@ public abstract class Element implements IElement {
         }
     }
 
-    public void setOnInteract(Consumer<Element> onInteract) {
+    public void setOnInteract(BiConsumer<Element<T>, T> onInteract) {
         this.onInteract = onInteract;
     }
 
-    public abstract void onInteract();
+    public abstract void onInteract(Object input);
 }

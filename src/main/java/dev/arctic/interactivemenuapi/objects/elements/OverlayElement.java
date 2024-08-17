@@ -37,7 +37,7 @@ public class OverlayElement extends Element implements IOverlayElement {
     }
 
     @Override
-    public void onInteract() {
+    public void onInteract(Object input) {
         if (interactToRemove) {
             cleanup();
         }

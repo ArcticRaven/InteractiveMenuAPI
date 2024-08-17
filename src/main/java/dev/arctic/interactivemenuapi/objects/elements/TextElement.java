@@ -20,7 +20,7 @@ public class TextElement extends Element implements ITextElement {
     }
 
     @Override
-    public void onInteract() {
+    public void onInteract(Object input) {
     }
 
     @Override

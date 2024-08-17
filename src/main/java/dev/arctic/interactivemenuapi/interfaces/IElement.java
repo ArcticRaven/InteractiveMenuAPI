@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
  * Interface representing a generic Element in the Interactive Menu API.
  * All specific element types should implement this interface or its sub-interfaces.
  */
-public interface IElement {
+public interface IElement<T> {
 
     /**
      * Updates the location of the element relative to its parent division's location.
@@ -24,9 +24,14 @@ public interface IElement {
     void cleanup();
 
     /**
-     * Handles interactions with the element.
+     * Handles interactions with the element. The specific behavior of this method is defined by the
+     * {@link BiConsumer} function provided to the {@link Element#setOnInteract(BiConsumer)} method.
+     *
+     * @param input The input to the interaction. The type of this parameter is defined by the API user
+     *              when they set the {@link BiConsumer} function. It's the responsibility of the API user
+     *              to ensure they're inputting and getting the right type of object.
      */
-    void onInteract();
+    void onInteract(T input);
 
     /**
      * Gets the parent menu of this element.

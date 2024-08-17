@@ -54,7 +54,7 @@ public class DisplayElement extends Element implements IDisplayElement {
     }
 
     @Override
-    public void onInteract() {
+    public void onInteract(Object input) {
     }
 
     @Override

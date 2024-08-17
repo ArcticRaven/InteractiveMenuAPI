@@ -30,7 +30,7 @@ public class ToggleElement extends Element implements IToggleElement {
     }
 
     @Override
-    public void onInteract() {
+    public void onInteract(Object input) {
         isPressed = !isPressed;
         if (pressAnimationType != AnimationType.NONE) {
             applyAnimation(duration);
