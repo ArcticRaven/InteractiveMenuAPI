@@ -11,6 +11,8 @@ import org.bukkit.entity.TextDisplay;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
+import java.util.function.Consumer;
+
 @Getter
 @Setter
 public abstract class Element implements IElement {
@@ -21,6 +23,7 @@ public abstract class Element implements IElement {
     protected Vector offset;
     protected Interaction interactionEntity;
     protected TextDisplay textDisplayEntity;
+    private Consumer<Element> onInteract;
 
     public Element(Menu parentMenu, Division parentDivision, Vector offset) {
         this.parentMenu = parentMenu;
@@ -83,6 +86,10 @@ public abstract class Element implements IElement {
         } else {
             return new Vector(z, y, -x);
         }
+    }
+
+    public void setOnInteract(Consumer<Element> onInteract) {
+        this.onInteract = onInteract;
     }
 
     public abstract void onInteract();
