@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
  * Interface representing a generic Element in the Interactive Menu API.
  * All specific element types should implement this interface or its sub-interfaces.
  */
-public interface IElement<T> {
+public interface IElement {
 
     /**
      * Updates the location of the element relative to its parent division's location.
