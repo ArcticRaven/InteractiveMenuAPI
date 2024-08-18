@@ -25,13 +25,13 @@ public interface IElement<T> {
 
     /**
      * Handles interactions with the element. The specific behavior of this method is defined by the
-     * {@link BiConsumer} function provided to the {@link Element#setOnInteract(BiConsumer)} method.
+     * BiConsumer function provided to the element.setOnInteract method.
      *
      * @param input The input to the interaction. The type of this parameter is defined by the API user
-     *              when they set the {@link BiConsumer} function. It's the responsibility of the API user
+     *              when they set the BiConsumer function. It's the responsibility of the API user
      *              to ensure they're inputting and getting the right type of object.
      */
-    void onInteract(T input);
+    void onInteract(Object input);
 
     /**
      * Gets the parent menu of this element.

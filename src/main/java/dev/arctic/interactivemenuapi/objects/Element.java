@@ -12,7 +12,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 @Getter
 @Setter
