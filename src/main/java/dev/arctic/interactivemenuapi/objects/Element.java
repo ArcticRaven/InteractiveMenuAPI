@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
@@ -15,7 +16,7 @@ import java.util.function.BiConsumer;
 
 @Getter
 @Setter
-public abstract class Element<T> implements IElement {
+public abstract class Element implements IElement {
 
     protected Menu parentMenu;
     protected Division parentDivision;
@@ -23,7 +24,7 @@ public abstract class Element<T> implements IElement {
     protected Vector offset;
     protected Interaction interactionEntity;
     protected TextDisplay textDisplayEntity;
-    private BiConsumer<Element<T>, T> onInteract;
+    private BiConsumer<Player, Object> onInteract;
 
     public Element(Menu parentMenu, Division parentDivision, Vector offset) {
         this.parentMenu = parentMenu;
@@ -88,9 +89,19 @@ public abstract class Element<T> implements IElement {
         }
     }
 
-    public void setOnInteract(BiConsumer<Element<T>, T> onInteract) {
+    public void setOnInteract(BiConsumer<Player, Object> onInteract) {
         this.onInteract = onInteract;
     }
 
+    public void onInteract(Player player, Object input) {
+        if (onInteract != null) {
+            onInteract.accept(player, input);
+        }
+    }
+
     public abstract void onInteract(Object input);
+
+    public abstract Location getCurrentLocation();
+
+    public abstract void setCurrentLocation(Location currentLocation);
 }

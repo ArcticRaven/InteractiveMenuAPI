@@ -3,14 +3,14 @@ package dev.arctic.interactivemenuapi.interfaces;
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
 import org.bukkit.Location;
-import org.bukkit.util.Vector;
+import org.bukkit.entity.Player;
+import java.util.function.BiConsumer;
 
 /**
  * Interface representing a generic Element in the Interactive Menu API.
  * All specific element types should implement this interface or its sub-interfaces.
  */
 public interface IElement {
-
     /**
      * Updates the location of the element relative to its parent division's location.
      *
@@ -22,16 +22,6 @@ public interface IElement {
      * Cleans up the element, removing any associated entities and freeing resources.
      */
     void cleanup();
-
-    /**
-     * Handles interactions with the element. The specific behavior of this method is defined by the
-     * BiConsumer function provided to the element.setOnInteract method.
-     *
-     * @param input The input to the interaction. The type of this parameter is defined by the API user
-     *              when they set the BiConsumer function. It's the responsibility of the API user
-     *              to ensure they're inputting and getting the right type of object.
-     */
-    void onInteract(Object input);
 
     /**
      * Gets the parent menu of this element.
@@ -66,27 +56,27 @@ public interface IElement {
      *
      * @return The current location.
      */
-    Location getCurrentLocation();
+    Location getLocation();
 
     /**
      * Sets the current location of this element.
      *
-     * @param currentLocation The current location.
+     * @param location The current location.
      */
-    void setCurrentLocation(Location currentLocation);
+    void setLocation(Location location);
 
     /**
-     * Gets the offset of this element relative to the parent division's location.
+     * Sets the action to be performed when this element is interacted with.
      *
-     * @return The offset.
+     * @param onInteract BiConsumer that takes a Player and an Object (input).
      */
-    Vector getOffset();
+    void setOnInteract(BiConsumer<Player, Object> onInteract);
 
     /**
-     * Sets the offset of this element relative to the parent division's location.
+     * Executes the action defined by the BiConsumer when this element is interacted with.
      *
-     * @param offset The offset.
+     * @param player The player interacting with the element.
+     * @param input The input object related to the interaction.
      */
-    void setOffset(Vector offset);
+    void onInteract(Player player, Object input);
 }
-

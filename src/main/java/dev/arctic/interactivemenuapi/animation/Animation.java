@@ -7,17 +7,32 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+/**
+ * Represents an animation that can be applied to elements or divisions in the Interactive Menu API.
+ */
 public class Animation {
     private AnimationType type;
     private double stepper;
     private int duration;
 
+    /**
+     * Constructs an Animation with the specified type, stepper, and tick duration.
+     *
+     * @param type The type of animation.
+     * @param stepper The step value for the animation.
+     * @param tickDuration The duration of the animation in ticks.
+     */
     public Animation(AnimationType type, double stepper, int tickDuration) {
         this.type = type;
         this.stepper = stepper;
         this.duration = tickDuration;
     }
 
+    /**
+     * Applies the animation and returns the result, which includes the vector change and opacity.
+     *
+     * @return The result of the animation, including the vector change and opacity.
+     */
     public AnimationResult apply() {
         Vector vectorChange = new Vector(0, 0, 0);
         int opacity = 100; // Default opacity
@@ -38,6 +53,12 @@ public class Animation {
         return new AnimationResult(type, vectorChange, opacity);
     }
 
+    /**
+     * Updates the location of the input division relative to the root menu location.
+     *
+     * @param division The division whose location is to be updated.
+     * @param rootMenuLocation The root location of the menu.
+     */
     public void updateInputDivisionLocation(Division division, Location rootMenuLocation) {
         Plugin plugin = division.getParentMenu().getPlugin();
         new BukkitRunnable() {
@@ -55,57 +76,35 @@ public class Animation {
                 if (type != AnimationType.NONE) {
                     AnimationResult result = apply();
                     newLocation.add(result.vectorChange());
-                    setDivisionOpacity(division, result.opacity());
                 }
 
-                division.setCurrentLocation(newLocation);
-
-                for (Element element : division.getElements()) {
-                    element.updateLocation(newLocation);
-                }
-
+                // Update the division's location
+                division.updateLocation(newLocation);
                 ticks++;
             }
-        }.runTaskTimerAsynchronously(plugin, 0, 1);
+        }.runTaskTimer(plugin, 0, 1);
     }
 
-    private void setDivisionOpacity(Division division, int opacity) {
-        for (Element element : division.getElements()) {
-            element.setOpacity(opacity);
-        }
-    }
-
+    /**
+     * Updates the location of the specified element relative to its parent location.
+     *
+     * @param element The element whose location is to be updated.
+     * @param parentLocation The location of the parent.
+     */
     public void updateElementLocation(Element element, Location parentLocation) {
-        Plugin plugin = element.getParentMenu().getPlugin();
-        new BukkitRunnable() {
-            int ticks = 0;
+        Location newLocation = parentLocation.clone().add(element.getOffset());
 
-            @Override
-            public void run() {
-                if (ticks >= duration) {
-                    cancel();
-                    return;
-                }
+        if (type != AnimationType.NONE) {
+            AnimationResult result = apply();
+            newLocation.add(result.vectorChange());
+        }
 
-                Location newLocation = parentLocation.clone().add(element.getOffset());
-
-                if (type != AnimationType.NONE) {
-                    AnimationResult result = apply();
-                    newLocation.add(result.vectorChange());
-                    setElementOpacity(element, result.opacity());
-                }
-
-                element.updateLocation(newLocation);
-
-                ticks++;
-            }
-        }.runTaskTimerAsynchronously(plugin, 0, 1);
+        // Update the element's location
+        element.setLocation(newLocation);
     }
 
-    private void setElementOpacity(Element element, int opacity) {
-        element.setOpacity(opacity);
-    }
-
-    public record AnimationResult(AnimationType type, Vector vectorChange, int opacity) {
-    }
+    /**
+     * Represents the result of an animation, including the type, vector change, and opacity.
+     */
+    public record AnimationResult(AnimationType type, Vector vectorChange, int opacity) {}
 }
