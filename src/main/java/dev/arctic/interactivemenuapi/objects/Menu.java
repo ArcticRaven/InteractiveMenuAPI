@@ -39,7 +39,7 @@ public class Menu implements IMenu {
     public Menu (Location rootLocation, int timeoutSeconds, Plugin plugin) {
         this.rootLocation = rootLocation;
         this.timeoutSeconds = timeoutSeconds;
-        this.lastInteractionTime = System.currentTimeMillis() / 1000;
+        this.lastInteractionTime = System.currentTimeMillis();
         this.doCleanup = true;
         this.plugin = plugin;
         initializeMenu();

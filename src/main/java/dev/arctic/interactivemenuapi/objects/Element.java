@@ -89,11 +89,12 @@ public abstract class Element implements IElement {
         }
     }
 
-    public void setOnInteract(BiConsumer<Player, Object> onInteract) {
+    public void setExternalFunction(BiConsumer<Player, Object> onInteract) {
         this.onInteract = onInteract;
     }
 
-    public void onInteract(Player player, Object input) {
+    public void doExternalFunction(Player player, Object input) {
+        getParentMenu().setLastInteractionTime(System.currentTimeMillis());
         if (onInteract != null) {
             onInteract.accept(player, input);
         }

@@ -70,7 +70,7 @@ public interface IElement {
      *
      * @param onInteract BiConsumer that takes a Player and an Object (input).
      */
-    void setOnInteract(BiConsumer<Player, Object> onInteract);
+    void setExternalFunction(BiConsumer<Player, Object> onInteract);
 
     /**
      * Executes the action defined by the BiConsumer when this element is interacted with.
@@ -78,5 +78,5 @@ public interface IElement {
      * @param player The player interacting with the element.
      * @param input The input object related to the interaction.
      */
-    void onInteract(Player player, Object input);
+    void doExternalFunction(Player player, Object input);
 }
