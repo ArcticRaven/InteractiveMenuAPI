@@ -63,6 +63,12 @@ public class DisplayElement extends Element implements IDisplayElement {
         displayEntity.setItemStack(displayItem);
     }
 
+    @Override
+    public void cleanup() {
+        super.cleanup();
+        displayEntity.remove();
+    }
+
     /**
      * Gets the display entity associated with this element.
      *
