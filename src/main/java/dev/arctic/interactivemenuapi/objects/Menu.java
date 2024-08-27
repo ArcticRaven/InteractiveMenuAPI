@@ -71,16 +71,17 @@ public class Menu implements IMenu {
     }
 
     public void startCleanupTask() {
-        if (!doCleanup) return;
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (isTimeoutExceeded()) {
-                    cleanup();
-                    this.cancel();
+        if (doCleanup) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (isTimeoutExceeded()) {
+                        cleanup();
+                        this.cancel();
+                    }
                 }
-            }
-        }.runTaskTimer(plugin, 2L, 20L); // Check every second
+            }.runTaskTimer(plugin, 2L, 20L); // Check every second
+        }
     }
 
     public void clearMenu() {
