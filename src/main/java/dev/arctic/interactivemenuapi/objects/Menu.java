@@ -42,7 +42,6 @@ public class Menu implements IMenu {
         this.lastInteractionTime = System.currentTimeMillis() / 1000;
         this.doCleanup = true;
         this.plugin = plugin;
-        this.anchorEntity = createAnchor(new Vector(0, 0, 0));
         initializeMenu();
     }
 
