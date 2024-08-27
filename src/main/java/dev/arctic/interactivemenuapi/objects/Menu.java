@@ -42,23 +42,15 @@ public class Menu implements IMenu {
         this.lastInteractionTime = System.currentTimeMillis() / 1000;
         this.doCleanup = true;
         this.plugin = plugin;
+        this.anchorEntity = createAnchor(new Vector(0, 0, 0));
         initializeMenu();
     }
 
     public void initializeMenu() {
-        createAnchor(new Vector(0, 0, 0));
         startRunnableUpdateGUI();
         startCleanupTask();
     }
 
-    public void createAnchor(Vector spawnOffset) {
-        if (rootLocation.getWorld() == null) return;
-        this.anchorEntity = rootLocation.getWorld().spawn(rootLocation.add(spawnOffset), Interaction.class, interaction -> {
-            interaction.setInteractionWidth(0.1f);
-            interaction.setInteractionHeight(0.1f);
-            interaction.setResponsive(false);
-        });
-    }
 
     private boolean isTimeoutExceeded() {
         return (System.currentTimeMillis() / 1000 - lastInteractionTime) >= timeoutSeconds;
@@ -76,7 +68,7 @@ public class Menu implements IMenu {
             public void run() {
                 updateMenuLocation();
             }
-        }.runTaskTimer(plugin, 0L, 5L); // Update every 5 ticks
+        }.runTaskTimerAsynchronously(plugin, 2L, 5L); // Update every 5 ticks
     }
 
     public void startCleanupTask() {
@@ -89,7 +81,7 @@ public class Menu implements IMenu {
                     this.cancel();
                 }
             }
-        }.runTaskTimer(plugin, 0L, 20L); // Check every second
+        }.runTaskTimerAsynchronously(plugin, 2L, 20L); // Check every second
     }
 
     public void clearMenu() {

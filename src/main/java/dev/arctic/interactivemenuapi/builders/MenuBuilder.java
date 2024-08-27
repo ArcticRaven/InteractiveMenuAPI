@@ -1,6 +1,5 @@
 package dev.arctic.interactivemenuapi.builders;
 
-import dev.arctic.interactivemenuapi.interfaces.IMenu;
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
 import org.bukkit.Location;
@@ -74,7 +73,22 @@ public class MenuBuilder {
         return this;
     }
 
+    // Method to create the anchor entity if not set explicitly
+    private Interaction createAnchor(Vector spawnOffset) {
+        if (rootLocation.getWorld() == null) return null;
+        return rootLocation.getWorld().spawn(rootLocation.add(spawnOffset), Interaction.class, i -> {
+            i.setInteractionWidth(0.1f);
+            i.setInteractionHeight(0.1f);
+            i.setResponsive(false);
+        });
+    }
+
     public Menu build() {
+        // Automatically create the anchor entity if it hasn't been set
+        if (this.anchorEntity == null && this.rootLocation != null) {
+            this.anchorEntity = createAnchor(new Vector(0, 0, 0));
+        }
+
         Menu menu = new Menu(rootLocation, timeoutSeconds, plugin);
         menu.setOwner(owner);
         menu.setAnchorEntity(anchorEntity);

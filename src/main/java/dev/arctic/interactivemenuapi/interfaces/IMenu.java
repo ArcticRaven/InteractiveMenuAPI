@@ -32,13 +32,6 @@ public interface IMenu {
     void initializeMenu();
 
     /**
-     * Creates an anchor entity at the specified spawn offset.
-     *
-     * @param spawnOffset The vector offset for spawning the anchor entity.
-     */
-    void createAnchor(Vector spawnOffset);
-
-    /**
      * Updates the locations of all divisions within this menu.
      */
     void updateMenuLocation();
