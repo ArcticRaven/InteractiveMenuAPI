@@ -40,9 +40,7 @@ public abstract class Element implements IElement {
             interaction.setMetadata("InteractiveMenu", new FixedMetadataValue(parentMenu.getPlugin(), this));
         });
 
-        this.textDisplayEntity = location.getWorld().spawn(location, TextDisplay.class, textDisplay -> {
-            textDisplay.setPersistent(false);
-        });
+        this.textDisplayEntity = location.getWorld().spawn(location, TextDisplay.class, textDisplay -> textDisplay.setPersistent(false));
     }
 
     public void updateLocation(Location divisionLocation) {

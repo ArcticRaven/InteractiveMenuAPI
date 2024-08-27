@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
 
 @Getter
 @Setter
@@ -95,6 +95,7 @@ public class Menu implements IMenu {
         try {
             anchorEntity.remove();
         } catch (Exception e) {
+            getPlugin().getLogger().log(Level.WARNING, "Failed to remove anchor entity for menu " + menuUUID);
         }
         if (updateTask != null) {
             updateTask.cancel();
