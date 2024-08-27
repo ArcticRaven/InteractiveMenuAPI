@@ -53,9 +53,9 @@ public class Menu implements IMenu {
 
     public void createAnchor(Vector spawnOffset) {
         if (rootLocation.getWorld() == null) return;
-        anchorEntity = rootLocation.getWorld().spawn(rootLocation.add(spawnOffset), Interaction.class, interaction -> {
-            interaction.setInteractionWidth(0f);
-            interaction.setInteractionHeight(0f);
+        this.anchorEntity = rootLocation.getWorld().spawn(rootLocation.add(spawnOffset), Interaction.class, interaction -> {
+            interaction.setInteractionWidth(0.1f);
+            interaction.setInteractionHeight(0.1f);
             interaction.setResponsive(false);
         });
     }

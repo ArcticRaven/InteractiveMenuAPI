@@ -34,7 +34,7 @@ public class Division implements IDivision {
 
     public void updateLocation(Location rootMenuLocation) {
         float yaw = rootMenuLocation.getYaw();
-        Vector adjustedOffset = getAdjustedOffset(rootMenuLocation, offset, yaw);
+        Vector adjustedOffset = getAdjustedOffset(offset, yaw);
 
         Location newLocation = rootMenuLocation.clone().add(adjustedOffset);
 
@@ -51,7 +51,7 @@ public class Division implements IDivision {
         }
     }
 
-    private Vector getAdjustedOffset(Location anchorLocation, Vector offset, float yaw) {
+    private Vector getAdjustedOffset(Vector offset, float yaw) {
         yaw = (yaw % 360 + 360) % 360;
 
         double x = offset.getX();
