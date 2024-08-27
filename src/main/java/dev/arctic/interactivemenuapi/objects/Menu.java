@@ -67,7 +67,7 @@ public class Menu implements IMenu {
             public void run() {
                 updateMenuLocation();
             }
-        }.runTaskTimerAsynchronously(plugin, 2L, 5L); // Update every 5 ticks
+        }.runTaskTimer(plugin, 2L, 5L); // Update every 5 ticks
     }
 
     public void startCleanupTask() {
@@ -80,7 +80,7 @@ public class Menu implements IMenu {
                     this.cancel();
                 }
             }
-        }.runTaskTimerAsynchronously(plugin, 2L, 20L); // Check every second
+        }.runTaskTimer(plugin, 2L, 20L); // Check every second
     }
 
     public void clearMenu() {
