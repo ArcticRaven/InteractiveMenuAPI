@@ -23,6 +23,9 @@ This resource is intended to interact similar to web-design, with complex pages 
 This API is designed for Spigot and its derivatives. It is currently not available for other server software.
 This API also uses Java 21 and will NOT support any versions earlier than 1.21.x
 
+You WILL need to shade into your plugin for this system to work. 
+[You can learn more about shading here](https://gradleup.com/shadow/introduction/)
+
 ### Maven
 ```xml
 <repositories>
