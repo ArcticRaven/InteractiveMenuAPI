@@ -135,7 +135,7 @@ public class DisplayElement extends Element implements IDisplayElement {
         Location newLocation = divisionLocation.clone().add(getAdjustedOffset(divisionLocation, offset, divisionLocation.getYaw()));
 
         interactionEntity.teleport(newLocation);
-        displayEntity.teleport(newLocation);
+        displayEntity.teleport(newLocation.add(0,0.5,0));
 
         this.location = newLocation;
     }

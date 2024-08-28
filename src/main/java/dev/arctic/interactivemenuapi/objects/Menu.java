@@ -13,7 +13,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Level;
+
 
 @Getter
 @Setter
@@ -43,6 +43,9 @@ public class Menu implements IMenu {
         this.lastInteractionTime = System.currentTimeMillis();
         this.doCleanup = false;
         this.plugin = plugin;
+
+        MenuManager.addAnchorEntityUUID(anchorEntity.getUniqueId());
+
         initializeMenu();
     }
 
@@ -98,11 +101,10 @@ public class Menu implements IMenu {
     public void cleanup() {
         clearMenu();
         plugin.getLogger().warning("executing cleanup!");// Clear all elements first
-        try {
-            anchorEntity.remove();
-        } catch (Exception e) {
-            getPlugin().getLogger().log(Level.WARNING, "Failed to remove anchor entity for menu " + menuUUID);
-        }
+
+        anchorEntity.remove();
+        MenuManager.removeAnchorEntityUUID(anchorEntity.getUniqueId());
+
         updateTask.cancel();
         cleanupTask.cancel();
     }
