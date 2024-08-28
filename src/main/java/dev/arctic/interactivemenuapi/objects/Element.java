@@ -70,7 +70,7 @@ public abstract class Element implements IElement {
         }
     }
 
-    private Vector getAdjustedOffset(Location anchorLocation, Vector offset, float yaw) {
+    protected Vector getAdjustedOffset(Location anchorLocation, Vector offset, float yaw) {
         yaw = (yaw % 360 + 360) % 360;
 
         double x = offset.getX();

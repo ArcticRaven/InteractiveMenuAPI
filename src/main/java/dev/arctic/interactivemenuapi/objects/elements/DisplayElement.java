@@ -128,4 +128,15 @@ public class DisplayElement extends Element implements IDisplayElement {
     public void setCurrentLocation(Location currentLocation) {
         super.location = currentLocation;
     }
+
+
+    @Override
+    public void updateLocation(Location divisionLocation) {
+        Location newLocation = divisionLocation.clone().add(getAdjustedOffset(divisionLocation, offset, divisionLocation.getYaw()));
+
+        interactionEntity.teleport(newLocation);
+        displayEntity.teleport(newLocation);
+
+        this.location = newLocation;
+    }
 }

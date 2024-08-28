@@ -59,9 +59,6 @@ public class ToggleElementBuilder {
     }
 
     public ToggleElement build() {
-        ToggleElement toggleElement = new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper, primaryText, secondaryText, duration);
-        toggleElement.storePrimaryText(primaryText);
-        toggleElement.storeSecondaryText(secondaryText);
-        return toggleElement;
+        return new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper, primaryText, secondaryText, duration);
     }
 }
