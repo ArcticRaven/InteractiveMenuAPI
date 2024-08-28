@@ -3,6 +3,12 @@
 
 An API to create Display Entity User Interfaces similar to web pages.
 
+To view an example plugin - check this out: [InteractiveMenuAPI Example Plugin](https://github.com/ArcticRaven/InteractiveMenuAPI-ExamplePlugin)
+Its filled with commentary and tips on how to get started and use the API. 
+
+For support - please use Github Issues or (preferably) join my support discord with the following invite link 
+[Discord](https://discord.gg/xErSpeWa8d)
+
 ## Features
 
 - Create interactive menus with buttons, text, and images.
@@ -81,101 +87,5 @@ the Child classes.
 
 ## In Code this time...
 
-### Example Menu Implementation
-Note that this code is also available inside of the "examplePlugin" module. 
-
-```java
-package dev.arctic.exampleMenu.menu;
-
-import dev.arctic.exampleMenu.ExampleMenu;
-import dev.arctic.interactivemenuapi.builders.*;
-import dev.arctic.interactivemenuapi.interfaces.*;
-import dev.arctic.interactivemenuapi.animation.AnimationType;
-import dev.arctic.interactivemenuapi.objects.Division;
-import dev.arctic.interactivemenuapi.objects.Menu;
-import dev.arctic.interactivemenuapi.objects.elements.DisplayElement;
-import dev.arctic.interactivemenuapi.objects.elements.TextElement;
-import dev.arctic.interactivemenuapi.objects.elements.ToggleElement;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
-
-import java.util.ArrayList;
-
-public class ExampleMenuUI {
-
-    public static IMenu createMenu(Location rootLocation, Player owner) {
-
-        /*
-            Build your Menu in this order
-            { Menu -> Division -> Elements -> Add Elements to Division -> Add Division to Menu -> Return Menu}
-            This will prevent null values when creating your elements.
-         */
-
-
-        // Create the menu and add the division
-        Menu menu = new MenuBuilder()
-                .setRootLocation(rootLocation)
-                .setPlugin(ExampleMenu.getPlugin(ExampleMenu.class))
-                .setDoCleanup(true)
-                .setOwner(owner)
-                .setDivisions(new ArrayList<>())
-                .setTimeoutSeconds(60)
-                .build();
-
-        // Create division
-        Division division = new DivisionBuilder()
-                .setAnimationType(AnimationType.LEFT)
-                .setAnimationStepper(0.1f)
-                .setElements(new ArrayList<>())
-                .setInitialLocation(rootLocation) //this should usually just be the root location, then apply offset
-                .setOffset(new Vector(0,0,0))
-                .setParentMenu(menu)
-                .build();
-
-        // Create display element
-        DisplayElement displayElement = new DisplayElementBuilder()
-                .setDisplayItem(new ItemStack(Material.DIAMOND))
-                .setParentMenu(menu)
-                .setParentDivision(division)
-                .setOffset(new Vector(0, 0, 1))
-                .build();
-
-        // Create text element
-        TextElement textElement = new TextElementBuilder()
-                .setText(Component.text("Test Text Element :D"))
-                .setParentMenu(menu)
-                .setParentDivision(division)
-                .setOffset(new Vector(0, 0, 0.5))
-                .build();
-
-        // Create toggle element
-        ToggleElement toggleElement = new ToggleElementBuilder()
-                .setPrimaryText(Component.text("Primary Text"))
-                .setSecondaryText(Component.text("Secondary Text"))
-                .setPressAnimationType(AnimationType.PRESSED)
-                .setPressAnimationStepper(0.1f)
-                .setOffset(new Vector(0, 0, 0))
-                .setParentMenu(menu)
-                .setParentDivision(division)
-                .build();
-
-
-        /*
-            Add the elements to the division
-            This is important to do before adding the division to the menu
-            Essentially reversing the order of creation :D
-         */
-        division.addElement(toggleElement);
-        division.addElement(textElement);
-        division.addElement(displayElement);
-
-        menu.addDivision(division);
-
-        return menu;
-    }
-}
-```
+The best place to get a good look at how to use is the example [InteractiveMenuAPI Example Plugin](https://github.com/ArcticRaven/InteractiveMenuAPI-ExamplePlugin). 
+I've filled it with comments and kept the example pretty straightforward. 
