@@ -7,6 +7,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+//TODO - implement Animations to be used in the Menu API and apply them to the elements and divisions automatically
+
 /**
  * Represents an animation that can be applied to elements or divisions in the Interactive Menu API.
  */

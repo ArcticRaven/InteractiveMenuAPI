@@ -14,6 +14,8 @@ import org.bukkit.util.Vector;
 
 import java.util.function.BiConsumer;
 
+//TODO - Add methods to adjust the interaction entity sizes as part of the Builder
+
 @Getter
 @Setter
 public abstract class Element implements IElement {
@@ -43,8 +45,8 @@ public abstract class Element implements IElement {
         this.textDisplayEntity = location.getWorld().spawn(location, TextDisplay.class, textDisplay -> textDisplay.setPersistent(false));
     }
 
-    public void updateLocation(Location divisionLocation) {
-        Location newLocation = divisionLocation.clone().add(getAdjustedOffset(divisionLocation, offset, divisionLocation.getYaw()));
+    public void updateLocation(Location startLocation) {
+        Location newLocation = startLocation.clone().add(getAdjustedOffset(startLocation, offset, startLocation.getYaw()));
 
         interactionEntity.teleport(newLocation);
         textDisplayEntity.teleport(newLocation);

@@ -106,6 +106,8 @@ public class Menu implements IMenu {
 
         updateTask.cancel();
         cleanupTask.cancel();
+
+        MenuManager.removeMenu(this);
     }
 
     public void addDivision(Division division) {
