@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Implementation-Title: InteractiveMenuAPI
-Implementation-Version: 1.0-SNAPSHOT
+Implementation-Version: beta-1.0.0
 
