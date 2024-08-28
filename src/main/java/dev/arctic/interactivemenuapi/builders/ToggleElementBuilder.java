@@ -1,7 +1,7 @@
 package dev.arctic.interactivemenuapi.builders;
 
-import dev.arctic.interactivemenuapi.interfaces.*;
-import dev.arctic.interactivemenuapi.objects.*;
+import dev.arctic.interactivemenuapi.objects.Division;
+import dev.arctic.interactivemenuapi.objects.Menu;
 import dev.arctic.interactivemenuapi.animation.AnimationType;
 import dev.arctic.interactivemenuapi.objects.elements.ToggleElement;
 import net.kyori.adventure.text.Component;
@@ -48,17 +48,20 @@ public class ToggleElementBuilder {
         return this;
     }
 
-    public ToggleElementBuilder setPrimaryText(Component primaryText) {
+    public ToggleElementBuilder storePrimaryText(Component primaryText) {
         this.primaryText = primaryText;
         return this;
     }
 
-    public ToggleElementBuilder setSecondaryText(Component secondaryText) {
+    public ToggleElementBuilder storeSecondaryText(Component secondaryText) {
         this.secondaryText = secondaryText;
         return this;
     }
+
     public ToggleElement build() {
-        return new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper, primaryText, secondaryText, duration);
+        ToggleElement toggleElement = new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper, primaryText, secondaryText, duration);
+        toggleElement.storePrimaryText(primaryText);
+        toggleElement.storeSecondaryText(secondaryText);
+        return toggleElement;
     }
 }
-
