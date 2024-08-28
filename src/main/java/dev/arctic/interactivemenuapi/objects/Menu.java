@@ -23,6 +23,7 @@ public class Menu implements IMenu {
     protected Player owner;
     protected Interaction anchorEntity;
     protected BukkitTask updateTask;
+    protected BukkitTask cleanupTask;
     private Plugin plugin;
     protected List<Division> divisions = new CopyOnWriteArrayList<>();
     protected List<Object> objectStorage = new CopyOnWriteArrayList<>();
@@ -34,25 +35,29 @@ public class Menu implements IMenu {
     //function
     private int timeoutSeconds;
     private long lastInteractionTime;
-    private boolean doCleanup;
+    @Getter private boolean doCleanup;
 
     public Menu (Location rootLocation, int timeoutSeconds, Plugin plugin) {
         this.rootLocation = rootLocation;
         this.timeoutSeconds = timeoutSeconds;
         this.lastInteractionTime = System.currentTimeMillis();
-        this.doCleanup = true;
+        this.doCleanup = false;
         this.plugin = plugin;
         initializeMenu();
     }
 
     public void initializeMenu() {
+        plugin.getLogger().warning("Initializing menu!");
         startRunnableUpdateGUI();
+        plugin.getLogger().warning("Starting update task!");
         startCleanupTask();
+        plugin.getLogger().warning("Starting cleanup task!");
     }
 
 
     private boolean isTimeoutExceeded() {
-        return (System.currentTimeMillis() / 1000 - lastInteractionTime) >= timeoutSeconds;
+        return (System.currentTimeMillis() / 1000 - this.lastInteractionTime) >= this.timeoutSeconds;
+
     }
 
     public void updateMenuLocation() {
@@ -71,36 +76,35 @@ public class Menu implements IMenu {
     }
 
     public void startCleanupTask() {
-        if (doCleanup) {
-            new BukkitRunnable() {
+           cleanupTask = new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (isTimeoutExceeded()) {
+                    if (doCleanup && isTimeoutExceeded()) {
                         cleanup();
                         this.cancel();
                     }
                 }
             }.runTaskTimer(plugin, 2L, 20L); // Check every second
         }
-    }
 
     public void clearMenu() {
         for (Division division : divisions) {
+            plugin.getLogger().warning("Cleaning up division!");
             division.cleanup();
         }
         divisions.clear();
     }
 
     public void cleanup() {
-        clearMenu(); // Clear all elements first
+        clearMenu();
+        plugin.getLogger().warning("executing cleanup!");// Clear all elements first
         try {
             anchorEntity.remove();
         } catch (Exception e) {
             getPlugin().getLogger().log(Level.WARNING, "Failed to remove anchor entity for menu " + menuUUID);
         }
-        if (updateTask != null) {
-            updateTask.cancel();
-        }
+        updateTask.cancel();
+        cleanupTask.cancel();
     }
 
     public void addDivision(Division division) {

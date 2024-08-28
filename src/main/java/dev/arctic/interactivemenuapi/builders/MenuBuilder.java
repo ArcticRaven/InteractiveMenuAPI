@@ -90,12 +90,13 @@ public class MenuBuilder {
         }
 
         Menu menu = new Menu(rootLocation, timeoutSeconds, plugin);
+
         menu.setOwner(owner);
         menu.setAnchorEntity(anchorEntity);
         menu.setPlugin(plugin);
         menu.setDivisions(divisions);
         menu.setMenuUUID(menuUUID);
-        menu.setLastInteractionTime(lastInteractionTime);
+        menu.setLastInteractionTime(System.currentTimeMillis());
         menu.setDoCleanup(doCleanup);
         return menu;
     }
