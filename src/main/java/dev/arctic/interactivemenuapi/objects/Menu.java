@@ -44,7 +44,7 @@ public class Menu implements IMenu {
         this.doCleanup = false;
         this.plugin = plugin;
 
-        MenuManager.addAnchorEntityUUID(anchorEntity.getUniqueId());
+        MenuManager.addMenu(this);
 
         initializeMenu();
     }
@@ -103,7 +103,6 @@ public class Menu implements IMenu {
         plugin.getLogger().warning("executing cleanup!");// Clear all elements first
 
         anchorEntity.remove();
-        MenuManager.removeAnchorEntityUUID(anchorEntity.getUniqueId());
 
         updateTask.cancel();
         cleanupTask.cancel();
