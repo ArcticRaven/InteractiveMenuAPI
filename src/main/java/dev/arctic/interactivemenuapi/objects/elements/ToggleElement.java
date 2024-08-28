@@ -1,6 +1,5 @@
 package dev.arctic.interactivemenuapi.objects.elements;
 
-import dev.arctic.interactivemenuapi.animation.Animation;
 import dev.arctic.interactivemenuapi.animation.AnimationType;
 import dev.arctic.interactivemenuapi.interfaces.IToggleElement;
 import dev.arctic.interactivemenuapi.objects.Division;
@@ -24,9 +23,10 @@ public class ToggleElement extends Element implements IToggleElement {
         this.isPressed = false;
         this.pressAnimationType = pressAnimationType;
         this.pressAnimationStepper = pressAnimationStepper;
-        this.primaryText = primaryText;
-        this.secondaryText = secondaryText;
+        storePrimaryText(primaryText);
+        storeSecondaryText(secondaryText);
         this.duration = duration;
+        setPrimaryText();
     }
 
     @Override
@@ -37,12 +37,24 @@ public class ToggleElement extends Element implements IToggleElement {
         }
     }
 
-    public void setPrimaryText(){
+    @Override
+    public void setPrimaryText() {
         textDisplayEntity.text(primaryText);
     }
 
-    public void setSecondaryText(){
+    @Override
+    public void setSecondaryText() {
         textDisplayEntity.text(secondaryText);
+    }
+
+    @Override
+    public void storePrimaryText(Component primaryText) {
+        this.primaryText = primaryText;
+    }
+
+    @Override
+    public void storeSecondaryText(Component secondaryText) {
+        this.secondaryText = secondaryText;
     }
 
     @Override
@@ -61,19 +73,9 @@ public class ToggleElement extends Element implements IToggleElement {
     }
 
     @Override
-    public void setPrimaryText(Component primaryText) {
-        this.primaryText = primaryText;
-    }
-
-    @Override
-    public void setSecondaryText(Component secondaryText) {
-        this.secondaryText = secondaryText;
-    }
-
-    @Override
     public void applyAnimation(int duration) {
-        if (pressAnimationType == AnimationType.PRESSED){
-            if (isPressed){
+        if (pressAnimationType == AnimationType.PRESSED) {
+            if (isPressed) {
                 setSecondaryText();
             } else {
                 setPrimaryText();

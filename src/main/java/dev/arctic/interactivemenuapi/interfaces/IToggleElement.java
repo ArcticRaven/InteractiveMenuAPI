@@ -28,18 +28,28 @@ public interface IToggleElement extends IElement {
     void setPressed(boolean pressed);
 
     /**
-     * Sets the primary text for the toggle element.
+     * Stores the primary text for the toggle element.
      *
-     * @param primaryText The primary text to display when unpressed.
+     * @param primaryText The primary text to store.
      */
-    void setPrimaryText(Component primaryText);
+    void storePrimaryText(Component primaryText);
 
     /**
-     * Sets the secondary text for the toggle element.
+     * Stores the secondary text for the toggle element.
      *
-     * @param secondaryText The secondary text to display when pressed.
+     * @param secondaryText The secondary text to store.
      */
-    void setSecondaryText(Component secondaryText);
+    void storeSecondaryText(Component secondaryText);
+
+    /**
+     * Applies the primary text to the TextDisplayEntity.
+     */
+    void setPrimaryText();
+
+    /**
+     * Applies the secondary text to the TextDisplayEntity.
+     */
+    void setSecondaryText();
 
     /**
      * Applies the animation for the toggle element based on its current state.
