@@ -50,11 +50,8 @@ public class Menu implements IMenu {
     }
 
     public void initializeMenu() {
-        plugin.getLogger().warning("Initializing menu!");
         startRunnableUpdateGUI();
-        plugin.getLogger().warning("Starting update task!");
         startCleanupTask();
-        plugin.getLogger().warning("Starting cleanup task!");
     }
 
 
@@ -100,7 +97,6 @@ public class Menu implements IMenu {
 
     public void cleanup() {
         clearMenu();
-        plugin.getLogger().warning("executing cleanup!");// Clear all elements first
 
         anchorEntity.remove();
 
