@@ -89,7 +89,6 @@ public class Menu implements IMenu {
 
     public void clearMenu() {
         for (Division division : divisions) {
-            plugin.getLogger().warning("Cleaning up division!");
             division.cleanup();
         }
         divisions.clear();

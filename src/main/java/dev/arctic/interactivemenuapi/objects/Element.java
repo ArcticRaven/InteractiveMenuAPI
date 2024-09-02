@@ -72,22 +72,17 @@ public abstract class Element implements IElement {
         }
     }
 
-    protected Vector getAdjustedOffset(Location anchorLocation, Vector offset, float yaw) {
-        yaw = (yaw % 360 + 360) % 360;
+    protected Vector getAdjustedOffset(Vector offset, float yaw) {
+        // No yaw normalization; handle yaw directly as needed.
+        double radians = Math.toRadians(yaw);
 
-        double x = offset.getX();
-        double y = offset.getY();
-        double z = offset.getZ();
+        double cos = Math.cos(radians);
+        double sin = Math.sin(radians);
 
-        if (yaw >= 315 || yaw < 45) {
-            return new Vector(x, y, z);
-        } else if (yaw >= 45 && yaw < 135) {
-            return new Vector(-z, y, x);
-        } else if (yaw >= 135 && yaw < 225) {
-            return new Vector(-x, y, -z);
-        } else {
-            return new Vector(z, y, -x);
-        }
+        double x = offset.getX() * cos - offset.getZ() * sin;
+        double z = offset.getX() * sin + offset.getZ() * cos;
+
+        return new Vector(x, offset.getY(), z);
     }
 
     public void setExternalFunction(BiConsumer<Player, Object> onInteract) {

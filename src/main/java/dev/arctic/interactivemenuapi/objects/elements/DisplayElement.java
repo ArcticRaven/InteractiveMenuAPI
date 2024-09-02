@@ -132,7 +132,7 @@ public class DisplayElement extends Element implements IDisplayElement {
 
     @Override
     public void updateLocation(Location startLocation) {
-        Location newLocation = startLocation.clone().add(getAdjustedOffset(startLocation, offset, startLocation.getYaw()));
+        Location newLocation = startLocation.clone().add(getAdjustedOffset(offset, startLocation.getYaw()));
 
         interactionEntity.teleport(newLocation);
         displayEntity.teleport(newLocation.add(0,0.5,0));
