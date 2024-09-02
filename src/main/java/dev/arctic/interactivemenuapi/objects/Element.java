@@ -46,7 +46,7 @@ public abstract class Element implements IElement {
     }
 
     public void updateLocation(Location startLocation) {
-        Location newLocation = startLocation.clone().add(getAdjustedOffset(startLocation, offset, startLocation.getYaw()));
+        Location newLocation = startLocation.clone().add(getAdjustedOffset(offset, startLocation.getYaw()));
 
         interactionEntity.teleport(newLocation);
         textDisplayEntity.teleport(newLocation);
