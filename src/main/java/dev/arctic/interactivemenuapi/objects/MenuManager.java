@@ -11,7 +11,7 @@ public class MenuManager {
 
     private static final ArrayList<Menu> ActiveMenus = new ArrayList<>();
     @Getter
-    static BukkitTask CleanupTask;
+    public static BukkitTask CleanupTask;
 
     /**
      * Adds a menu to the list of active menus.
