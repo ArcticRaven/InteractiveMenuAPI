@@ -7,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
@@ -15,9 +14,6 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Builder class for constructing a Menu.
- */
 public class MenuBuilder {
 
     private Location rootLocation;
@@ -91,8 +87,17 @@ public class MenuBuilder {
     }
 
     public Menu build() {
+        NamespacedKey menuUUIDKey = new NamespacedKey(plugin, "MENU_UUID");
+        if (owner.getPersistentDataContainer().has(menuUUIDKey, PersistentDataType.STRING)) {
+            String uuidString = owner.getPersistentDataContainer().get(menuUUIDKey, PersistentDataType.STRING);
+            UUID existingUUID = UUID.fromString(uuidString);
 
-        plugin.getLogger().info("Building menu");
+            Menu existingMenu = MenuManager.getMenuByUUID(existingUUID);
+
+            if (existingMenu != null) {
+                existingMenu.cleanup();
+            }
+        }
 
         if (this.anchorEntity == null && this.rootLocation != null) {
             this.anchorEntity = createAnchor(new Vector(0, 0, 0));
@@ -107,23 +112,8 @@ public class MenuBuilder {
         menu.setLastInteractionTime(System.currentTimeMillis());
         menu.setDoCleanup(doCleanup);
 
-        plugin.getLogger().info("Getting player PDC and removing old menu");
-        // Remove existing menu from PDC if it exists
-        if (owner.getPersistentDataContainer().has(new NamespacedKey(plugin, "InteractiveMenu"), PersistentDataType.STRING)) {
-            String oldUUIDString = owner.getPersistentDataContainer().get(new NamespacedKey(plugin, "InteractiveMenu"), PersistentDataType.STRING);
-            UUID oldUUID = UUID.fromString(oldUUIDString);
-            Menu oldMenu = MenuManager.getMenu(oldUUID);
-            if (oldMenu != null) {
-                plugin.getLogger().info("Old menu found, removing it now");
-                oldMenu.cleanup();
-            }
-        }
+        owner.getPersistentDataContainer().set(menuUUIDKey, PersistentDataType.STRING, menuUUID.toString());
 
-        plugin.getLogger().info("Setting new menu UUID in PDC");
-        // Store new Menu UUID in PDC
-        owner.getPersistentDataContainer().set(new NamespacedKey(plugin, "InteractiveMenu"), PersistentDataType.STRING, menu.getMenuUUID().toString());
-        plugin.getLogger().info("Menu built successfully");
         return menu;
     }
-
 }

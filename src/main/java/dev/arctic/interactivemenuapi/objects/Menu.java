@@ -15,12 +15,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
 @Getter
 @Setter
 public class Menu implements IMenu {
 
-    //Objects
+    // Objects
     protected Player owner;
     protected Interaction anchorEntity;
     protected BukkitTask updateTask;
@@ -28,16 +27,16 @@ public class Menu implements IMenu {
     protected List<Division> divisions = new CopyOnWriteArrayList<>();
     protected List<Object> objectStorage = new CopyOnWriteArrayList<>();
 
-    //Data
+    // Data
     protected UUID menuUUID;
     protected Location rootLocation;
 
-    //function
+    // Function
     private int timeoutSeconds;
     private long lastInteractionTime;
     @Getter private boolean doCleanup;
 
-    public Menu (Location rootLocation, int timeoutSeconds, Plugin plugin) {
+    public Menu(Location rootLocation, int timeoutSeconds, Plugin plugin) {
         this.rootLocation = rootLocation;
         this.timeoutSeconds = timeoutSeconds;
         this.lastInteractionTime = System.currentTimeMillis();

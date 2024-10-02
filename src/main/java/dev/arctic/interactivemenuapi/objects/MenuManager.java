@@ -1,10 +1,5 @@
 package dev.arctic.interactivemenuapi.objects;
 
-import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitTask;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -12,8 +7,6 @@ import java.util.UUID;
 public class MenuManager {
 
     private static final Set<Menu> ActiveMenus = new HashSet<>();
-    @Getter
-    public static BukkitTask CleanupTask;
 
     public static void addMenu(Menu menu) {
         ActiveMenus.add(menu);
@@ -21,40 +14,20 @@ public class MenuManager {
 
     public static void removeMenu(Menu menu) {
         ActiveMenus.remove(menu);
-        menu.cleanup();
     }
 
-    public static Menu getMenu(UUID menuUUID) {
+    public static void cleanupMenus() {
         for (Menu menu : ActiveMenus) {
-            if (menu.getMenuUUID().equals(menuUUID)) {
+            menu.cleanup();
+        }
+    }
+
+    public static Menu getMenuByUUID(UUID uuid) {
+        for (Menu menu : ActiveMenus) {
+            if (menu.getMenuUUID().equals(uuid)) {
                 return menu;
             }
         }
         return null;
-    }
-
-    public static void cleanupMenus() {
-        for (Menu menu : new HashSet<>(ActiveMenus)) {
-            if (menu != null) {
-                menu.cleanup();
-            }
-        }
-        ActiveMenus.clear();
-    }
-
-    public static void cleanupExpiredMenus() {
-        long currentTime = System.currentTimeMillis();
-
-        for (Menu menu : new HashSet<>(ActiveMenus)) {
-            if (menu != null && menu.isDoCleanup() && currentTime - menu.getLastInteractionTime() > menu.getTimeoutSeconds() * 1000L) {
-                menu.getPlugin().getLogger().info("Cleaning up expired menu: " + menu.getMenuUUID());
-                menu.getPlugin().getLogger().info("Last interaction time: " + menu.getLastInteractionTime() + "\nCurrent time: " + currentTime + "\nTimeout: " + menu.getTimeoutSeconds()); ;
-                removeMenu(menu);
-            }
-        }
-    }
-
-    public static void startCleanupTask(Plugin plugin) {
-        CleanupTask = Bukkit.getScheduler().runTaskTimer(plugin, MenuManager::cleanupExpiredMenus, 40L, 40L);
     }
 }
