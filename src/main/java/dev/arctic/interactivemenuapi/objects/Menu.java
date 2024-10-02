@@ -81,7 +81,7 @@ public class Menu implements IMenu {
 
         updateTask.cancel();
 
-        owner.getMetadata("InteractiveMenu").clear();
+        owner.removeMetadata("InteractiveMenu", plugin);
 
         MenuManager.removeMenu(this);
     }

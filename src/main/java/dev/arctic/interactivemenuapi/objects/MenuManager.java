@@ -49,7 +49,7 @@ public class MenuManager {
         long currentTime = System.currentTimeMillis();
 
         for (Menu menu : new ArrayList<>(ActiveMenus)) {
-            if (menu != null && menu.isDoCleanup() && currentTime - menu.getLastInteractionTime() > menu.getTimeoutSeconds()) {
+            if (menu != null && menu.isDoCleanup() && currentTime - menu.getLastInteractionTime() > menu.getTimeoutSeconds() * 1000L) {
                 menu.cleanup();
                 removeMenu(menu);
             }
