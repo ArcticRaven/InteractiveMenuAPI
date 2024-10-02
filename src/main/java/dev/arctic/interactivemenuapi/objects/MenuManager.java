@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public class MenuManager {
 
@@ -21,6 +22,15 @@ public class MenuManager {
 
     public static void removeMenu(Menu menu) {
         ActiveMenus.remove(menu);
+    }
+
+    public static Menu getMenu(UUID menuUUID) {
+        for (Menu menu : ActiveMenus) {
+            if (menu.getMenuUUID().equals(menuUUID)) {
+                return menu;
+            }
+        }
+        return null;
     }
 
     public static void cleanupMenus() {

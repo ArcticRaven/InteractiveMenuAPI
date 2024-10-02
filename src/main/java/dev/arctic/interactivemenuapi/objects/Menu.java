@@ -4,6 +4,7 @@ import dev.arctic.interactivemenuapi.interfaces.IMenu;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -79,7 +80,7 @@ public class Menu implements IMenu {
 
         anchorEntity.remove();
         updateTask.cancel();
-        owner.removeMetadata("InteractiveMenu", plugin);
+        owner.getPersistentDataContainer().remove(new NamespacedKey(plugin, "InteractiveMenu"));
 
         MenuManager.removeMenu(this);
     }

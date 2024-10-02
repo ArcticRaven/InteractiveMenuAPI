@@ -2,10 +2,13 @@ package dev.arctic.interactivemenuapi.builders;
 
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
+import dev.arctic.interactivemenuapi.objects.MenuManager;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
@@ -101,16 +104,20 @@ public class MenuBuilder {
         menu.setLastInteractionTime(System.currentTimeMillis());
         menu.setDoCleanup(doCleanup);
 
-        if (!owner.getMetadata("InteractiveMenu").isEmpty()) {
-            Menu oldmenu = (Menu) owner.getMetadata("InteractiveMenu").get(0).value();
-            if (oldmenu != null) {
-                oldmenu.cleanup();
+        // Remove existing menu from PDC if it exists
+        if (owner.getPersistentDataContainer().has(new NamespacedKey(plugin, "InteractiveMenu"), PersistentDataType.STRING)) {
+            String oldUUIDString = owner.getPersistentDataContainer().get(new NamespacedKey(plugin, "InteractiveMenu"), PersistentDataType.STRING);
+            UUID oldUUID = UUID.fromString(oldUUIDString);
+            Menu oldMenu = MenuManager.getMenu(oldUUID);
+            if (oldMenu != null) {
+                oldMenu.cleanup();
             }
-            owner.removeMetadata("InteractiveMenu", plugin);
         }
 
-        owner.setMetadata("InteractiveMenu", new FixedMetadataValue(plugin, menu));
+        // Store new Menu UUID in PDC
+        owner.getPersistentDataContainer().set(new NamespacedKey(plugin, "InteractiveMenu"), PersistentDataType.STRING, menu.getMenuUUID().toString());
 
         return menu;
     }
+
 }
