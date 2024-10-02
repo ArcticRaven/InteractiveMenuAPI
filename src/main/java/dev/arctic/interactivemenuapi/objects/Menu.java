@@ -80,8 +80,8 @@ public class Menu implements IMenu {
 
         anchorEntity.remove();
         updateTask.cancel();
-        owner.getPersistentDataContainer().remove(new NamespacedKey(plugin, "InteractiveMenu"));
 
+        owner.getPersistentDataContainer().remove(new NamespacedKey(plugin, "InteractiveMenu"));
         MenuManager.removeMenu(this);
     }
 

@@ -91,6 +91,9 @@ public class MenuBuilder {
     }
 
     public Menu build() {
+
+        plugin.getLogger().info("Building menu");
+
         if (this.anchorEntity == null && this.rootLocation != null) {
             this.anchorEntity = createAnchor(new Vector(0, 0, 0));
         }
@@ -104,19 +107,22 @@ public class MenuBuilder {
         menu.setLastInteractionTime(System.currentTimeMillis());
         menu.setDoCleanup(doCleanup);
 
+        plugin.getLogger().info("Getting player PDC and removing old menu");
         // Remove existing menu from PDC if it exists
         if (owner.getPersistentDataContainer().has(new NamespacedKey(plugin, "InteractiveMenu"), PersistentDataType.STRING)) {
             String oldUUIDString = owner.getPersistentDataContainer().get(new NamespacedKey(plugin, "InteractiveMenu"), PersistentDataType.STRING);
             UUID oldUUID = UUID.fromString(oldUUIDString);
             Menu oldMenu = MenuManager.getMenu(oldUUID);
             if (oldMenu != null) {
+                plugin.getLogger().info("Old menu found, removing it now");
                 oldMenu.cleanup();
             }
         }
 
+        plugin.getLogger().info("Setting new menu UUID in PDC");
         // Store new Menu UUID in PDC
         owner.getPersistentDataContainer().set(new NamespacedKey(plugin, "InteractiveMenu"), PersistentDataType.STRING, menu.getMenuUUID().toString());
-
+        plugin.getLogger().info("Menu built successfully");
         return menu;
     }
 

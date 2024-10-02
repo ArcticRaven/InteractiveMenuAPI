@@ -39,33 +39,31 @@ public abstract class Element implements IElement {
         this.offset = offset;
         this.hiddenFromPlayers = hiddenFromPlayers;
         this.location = parentDivision.getCurrentLocation().clone().add(offset);
+
+        Plugin plugin = parentMenu.getPlugin();
+        plugin.getLogger().info("Element initializing entities");
         initializeEntities();
+
+        Player owner = parentMenu.getOwner();
+
+        plugin.getLogger().info("Element showing entities to player");
+        owner.showEntity(parentMenu.getPlugin(), interactionEntity);
+        owner.showEntity(parentMenu.getPlugin(), textDisplayEntity);
     }
 
     protected void initializeEntities() {
         Plugin plugin = parentMenu.getPlugin();
-        Player owner = parentMenu.getOwner();
-
         this.interactionEntity = location.getWorld().spawn(location, Interaction.class, interaction -> {
             interaction.setPersistent(false);
             interaction.setMetadata("InteractiveMenu", new FixedMetadataValue(plugin, this));
-
-
-            if (hiddenFromPlayers) {
-                interaction.setVisibleByDefault(false);
-                owner.showEntity(plugin, interaction);
-            }
+            interaction.setVisibleByDefault(false);
         });
 
         this.textDisplayEntity = location.getWorld().spawn(location, TextDisplay.class, textDisplay -> {
             textDisplay.setPersistent(false);
-            textDisplay.setVisibleByDefault(hiddenFromPlayers);
-
-            if (hiddenFromPlayers) {
-                textDisplay.setVisibleByDefault(false);
-                owner.showEntity(plugin, textDisplay);
-            }
+            textDisplay.setVisibleByDefault(false);
         });
+
     }
 
     public void showToPlayer(UUID playerUUID) {

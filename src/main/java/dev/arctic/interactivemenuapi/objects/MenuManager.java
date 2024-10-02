@@ -1,6 +1,5 @@
 package dev.arctic.interactivemenuapi.objects;
 
-import dev.arctic.interactivemenuapi.objects.Menu;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -48,6 +47,8 @@ public class MenuManager {
 
         for (Menu menu : new HashSet<>(ActiveMenus)) {
             if (menu != null && menu.isDoCleanup() && currentTime - menu.getLastInteractionTime() > menu.getTimeoutSeconds() * 1000L) {
+                menu.getPlugin().getLogger().info("Cleaning up expired menu: " + menu.getMenuUUID());
+                menu.getPlugin().getLogger().info("Last interaction time: " + menu.getLastInteractionTime() + "\nCurrent time: " + currentTime + "\nTimeout: " + menu.getTimeoutSeconds()); ;
                 removeMenu(menu);
             }
         }
