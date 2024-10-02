@@ -56,6 +56,6 @@ public class MenuManager {
      * @param plugin The plugin instance to schedule the task with.
      */
     public static void startCleanupTask(Plugin plugin) {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, MenuManager::cleanupExpiredMenus, 20L, 20L);
+        Bukkit.getScheduler().runTaskTimer(plugin, MenuManager::cleanupExpiredMenus, 20L, 20L);
     }
 }
