@@ -88,22 +88,11 @@ public class MenuBuilder {
     }
 
     public Menu build() {
-
-        //verify that the owner does not have an existing menu
-        if (!owner.getMetadata("InteractiveMenu").isEmpty()) {
-            Menu oldmenu = (Menu) owner.getMetadata("InteractiveMenu").get(0);
-            if (oldmenu != null) {
-                oldmenu.cleanup();
-            }
-        }
-
-        //create the anchor entity if not set explicitly
         if (this.anchorEntity == null && this.rootLocation != null) {
             this.anchorEntity = createAnchor(new Vector(0, 0, 0));
         }
 
         Menu menu = new Menu(rootLocation, timeoutSeconds, plugin);
-
         menu.setOwner(owner);
         menu.setAnchorEntity(anchorEntity);
         menu.setPlugin(plugin);
@@ -111,6 +100,14 @@ public class MenuBuilder {
         menu.setMenuUUID(menuUUID);
         menu.setLastInteractionTime(System.currentTimeMillis());
         menu.setDoCleanup(doCleanup);
+
+        if (!owner.getMetadata("InteractiveMenu").isEmpty()) {
+            Menu oldmenu = (Menu) owner.getMetadata("InteractiveMenu").get(0).value();
+            if (oldmenu != null) {
+                oldmenu.cleanup();
+            }
+            owner.removeMetadata("InteractiveMenu", plugin);
+        }
 
         owner.setMetadata("InteractiveMenu", new FixedMetadataValue(plugin, menu));
 
