@@ -14,30 +14,28 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
 @Getter
 @Setter
 public class Menu implements IMenu {
 
-    //Objects
+    // Objects
     protected Player owner;
     protected Interaction anchorEntity;
     protected BukkitTask updateTask;
-    protected BukkitTask cleanupTask;
     private Plugin plugin;
     protected List<Division> divisions = new CopyOnWriteArrayList<>();
     protected List<Object> objectStorage = new CopyOnWriteArrayList<>();
 
-    //Data
+    // Data
     protected UUID menuUUID;
     protected Location rootLocation;
 
-    //function
+    // Function
     private int timeoutSeconds;
     private long lastInteractionTime;
     @Getter private boolean doCleanup;
 
-    public Menu (Location rootLocation, int timeoutSeconds, Plugin plugin) {
+    public Menu(Location rootLocation, int timeoutSeconds, Plugin plugin) {
         this.rootLocation = rootLocation;
         this.timeoutSeconds = timeoutSeconds;
         this.lastInteractionTime = System.currentTimeMillis();
@@ -51,13 +49,6 @@ public class Menu implements IMenu {
 
     public void initializeMenu() {
         startRunnableUpdateGUI();
-        startCleanupTask();
-    }
-
-
-    private boolean isTimeoutExceeded() {
-        return (System.currentTimeMillis() / 1000 - this.lastInteractionTime) >= this.timeoutSeconds;
-
     }
 
     public void updateMenuLocation() {
@@ -75,18 +66,6 @@ public class Menu implements IMenu {
         }.runTaskTimer(plugin, 2L, 5L); // Update every 5 ticks
     }
 
-    public void startCleanupTask() {
-           cleanupTask = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (doCleanup && isTimeoutExceeded()) {
-                        cleanup();
-                        this.cancel();
-                    }
-                }
-            }.runTaskTimer(plugin, 2L, 20L); // Check every second
-        }
-
     public void clearMenu() {
         for (Division division : divisions) {
             division.cleanup();
@@ -100,7 +79,6 @@ public class Menu implements IMenu {
         anchorEntity.remove();
 
         updateTask.cancel();
-        cleanupTask.cancel();
 
         MenuManager.removeMenu(this);
     }

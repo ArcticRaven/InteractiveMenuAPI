@@ -5,7 +5,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.UUID;
@@ -40,11 +39,6 @@ public interface IMenu {
      * Starts the GUI update task, which periodically updates the menu.
      */
     void startRunnableUpdateGUI();
-
-    /**
-     * Starts the cleanup task, which checks for menu timeout and cleans up if necessary.
-     */
-    void startCleanupTask();
 
     /**
      * Clears all divisions and elements from the menu.

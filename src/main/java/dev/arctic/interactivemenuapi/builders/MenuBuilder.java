@@ -2,9 +2,12 @@ package dev.arctic.interactivemenuapi.builders;
 
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
+import dev.arctic.interactivemenuapi.objects.MenuManager;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
@@ -84,13 +87,23 @@ public class MenuBuilder {
     }
 
     public Menu build() {
-        // Automatically create the anchor entity if it hasn't been set
+        NamespacedKey menuUUIDKey = new NamespacedKey(plugin, "MENU_UUID");
+        if (owner.getPersistentDataContainer().has(menuUUIDKey, PersistentDataType.STRING)) {
+            String uuidString = owner.getPersistentDataContainer().get(menuUUIDKey, PersistentDataType.STRING);
+            UUID existingUUID = UUID.fromString(uuidString);
+
+            Menu existingMenu = MenuManager.getMenuByUUID(existingUUID);
+
+            if (existingMenu != null) {
+                existingMenu.cleanup();
+            }
+        }
+
         if (this.anchorEntity == null && this.rootLocation != null) {
             this.anchorEntity = createAnchor(new Vector(0, 0, 0));
         }
 
         Menu menu = new Menu(rootLocation, timeoutSeconds, plugin);
-
         menu.setOwner(owner);
         menu.setAnchorEntity(anchorEntity);
         menu.setPlugin(plugin);
@@ -98,6 +111,9 @@ public class MenuBuilder {
         menu.setMenuUUID(menuUUID);
         menu.setLastInteractionTime(System.currentTimeMillis());
         menu.setDoCleanup(doCleanup);
+
+        owner.getPersistentDataContainer().set(menuUUIDKey, PersistentDataType.STRING, menuUUID.toString());
+
         return menu;
     }
 }
