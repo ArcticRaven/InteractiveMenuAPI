@@ -10,8 +10,8 @@ import org.bukkit.util.Vector;
 
 public class TextElement extends Element implements ITextElement {
 
-    public TextElement(Menu parentMenu, Division parentDivision, Vector offset) {
-        super(parentMenu, parentDivision, offset);
+    public TextElement(Menu parentMenu, Division parentDivision, Vector offset, boolean visible) {
+        super(parentMenu, parentDivision, offset, visible);
         this.interactionEntity.remove();
     }
 

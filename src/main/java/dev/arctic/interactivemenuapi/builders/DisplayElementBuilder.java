@@ -11,6 +11,7 @@ public class DisplayElementBuilder {
     private Menu parentMenu;
     private Division parentDivision;
     private Vector offset;
+    private boolean visible;
     private ItemStack displayItem;
 
     public DisplayElementBuilder setParentMenu(Menu parentMenu) {
@@ -33,8 +34,13 @@ public class DisplayElementBuilder {
         return this;
     }
 
+    public DisplayElementBuilder setVisibility(boolean visible) {
+        this.visible = visible;
+        return this;
+    }
+
     public DisplayElement build() {
 
-        return new DisplayElement(parentMenu, parentDivision, offset, displayItem);
+        return new DisplayElement(parentMenu, parentDivision, offset, visible, displayItem);
     }
 }

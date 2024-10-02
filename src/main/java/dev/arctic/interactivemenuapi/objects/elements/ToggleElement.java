@@ -18,8 +18,8 @@ public class ToggleElement extends Element implements IToggleElement {
     private Component secondaryText;
     private int duration;
 
-    public ToggleElement(Menu parentMenu, Division parentDivision, Vector offset, AnimationType pressAnimationType, double pressAnimationStepper, Component primaryText, Component secondaryText, int duration) {
-        super(parentMenu, parentDivision, offset);
+    public ToggleElement(Menu parentMenu, Division parentDivision, Vector offset, boolean visible, AnimationType pressAnimationType, double pressAnimationStepper, Component primaryText, Component secondaryText, int duration) {
+        super(parentMenu, parentDivision, offset, visible);
         this.isPressed = false;
         this.pressAnimationType = pressAnimationType;
         this.pressAnimationStepper = pressAnimationStepper;

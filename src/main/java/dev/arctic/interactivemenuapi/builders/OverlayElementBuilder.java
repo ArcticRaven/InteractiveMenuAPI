@@ -12,6 +12,7 @@ public class OverlayElementBuilder {
     private Menu parentMenu;
     private Division parentDivision;
     private Vector offset;
+    private boolean visible;
     private boolean interactToRemove = false;
     private long displayDuration = 0L;
     private Component text;
@@ -46,7 +47,12 @@ public class OverlayElementBuilder {
         return this;
     }
 
+    public OverlayElementBuilder setVisible(boolean visible) {
+        this.visible = visible;
+        return this;
+    }
+
     public OverlayElement build() {
-        return new OverlayElement(parentMenu, parentDivision, offset, interactToRemove, displayDuration, text);
+        return new OverlayElement(parentMenu, parentDivision, offset, visible, interactToRemove, displayDuration, text);
     }
 }

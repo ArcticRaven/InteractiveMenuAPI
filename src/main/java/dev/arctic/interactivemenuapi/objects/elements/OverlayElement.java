@@ -16,8 +16,8 @@ public class OverlayElement extends Element implements IOverlayElement {
     private long displayDuration;
     private Component text;
 
-    public OverlayElement(Menu parentMenu, Division parentDivision, Vector offset, boolean interactToRemove, long displayDuration, Component text) {
-        super(parentMenu, parentDivision, offset.add(new Vector(0, 0.1, 0)));
+    public OverlayElement(Menu parentMenu, Division parentDivision, Vector offset, boolean visible, boolean interactToRemove, long displayDuration, Component text) {
+        super(parentMenu, parentDivision, offset.add(new Vector(0, 0.1, 0)), visible);
         this.interactToRemove = interactToRemove;
         this.displayDuration = displayDuration;
         this.text = text;

@@ -12,6 +12,7 @@ public class ToggleElementBuilder {
     private Menu parentMenu;
     private Division parentDivision;
     private Vector offset;
+    private boolean visible;
     private AnimationType pressAnimationType = AnimationType.NONE;
     private double pressAnimationStepper = 0.0;
     private int duration;
@@ -58,7 +59,12 @@ public class ToggleElementBuilder {
         return this;
     }
 
+    public ToggleElementBuilder setVisibility(boolean visible) {
+        this.visible = visible;
+        return this;
+    }
+
     public ToggleElement build() {
-        return new ToggleElement(parentMenu, parentDivision, offset, pressAnimationType, pressAnimationStepper, primaryText, secondaryText, duration);
+        return new ToggleElement(parentMenu, parentDivision, offset, visible, pressAnimationType, pressAnimationStepper, primaryText, secondaryText, duration);
     }
 }

@@ -12,6 +12,7 @@ public class TextElementBuilder {
     private Menu parentMenu;
     private Division parentDivision;
     private Vector offset;
+    private boolean visible;
     private Component text;
 
     public TextElementBuilder setParentMenu(Menu parentMenu) {
@@ -34,8 +35,13 @@ public class TextElementBuilder {
         return this;
     }
 
+    public TextElementBuilder setVisible(boolean visible) {
+        this.visible = visible;
+        return this;
+    }
+
     public TextElement build() {
-        TextElement textElement = new TextElement(parentMenu, parentDivision, offset);
+        TextElement textElement = new TextElement(parentMenu, parentDivision, offset, visible);
         if (text != null) {
             textElement.setText(text);
         }

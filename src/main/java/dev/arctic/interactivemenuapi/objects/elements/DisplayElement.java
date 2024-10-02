@@ -26,8 +26,8 @@ public class DisplayElement extends Element implements IDisplayElement {
      * @param offset The offset of this element from its parent division's location.
      * @param displayItem The item stack to be displayed by this element.
      */
-    public DisplayElement(Menu parentMenu, Division parentDivision, Vector offset, ItemStack displayItem) {
-        super(parentMenu, parentDivision, offset);
+    public DisplayElement(Menu parentMenu, Division parentDivision, Vector offset, Boolean visible, ItemStack displayItem) {
+        super(parentMenu, parentDivision, offset, visible);
         this.displayItem = displayItem;
         initializeDisplayItem();
     }
