@@ -4,14 +4,18 @@ import dev.arctic.interactivemenuapi.interfaces.IElement;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 
 //TODO - Add methods to adjust the interaction entity sizes as part of the Builder
@@ -27,22 +31,59 @@ public abstract class Element implements IElement {
     protected Interaction interactionEntity;
     protected TextDisplay textDisplayEntity;
     private BiConsumer<Player, Object> onInteract;
+    private boolean hiddenFromPlayers;
 
-    public Element(Menu parentMenu, Division parentDivision, Vector offset) {
+    public Element(Menu parentMenu, Division parentDivision, Vector offset, boolean hiddenFromPlayers) {
         this.parentMenu = parentMenu;
         this.parentDivision = parentDivision;
         this.offset = offset;
+        this.hiddenFromPlayers = hiddenFromPlayers;
         this.location = parentDivision.getCurrentLocation().clone().add(offset);
         initializeEntities();
     }
 
     protected void initializeEntities() {
+        Plugin plugin = parentMenu.getPlugin();
+        Player owner = parentMenu.getOwner();
+
         this.interactionEntity = location.getWorld().spawn(location, Interaction.class, interaction -> {
             interaction.setPersistent(false);
-            interaction.setMetadata("InteractiveMenu", new FixedMetadataValue(parentMenu.getPlugin(), this));
+            interaction.setMetadata("InteractiveMenu", new FixedMetadataValue(plugin, this));
+            interaction.setVisibleByDefault(!hiddenFromPlayers);
+
+            if (hiddenFromPlayers && owner != null) {
+                owner.showEntity(plugin, interaction);
+            }
         });
 
-        this.textDisplayEntity = location.getWorld().spawn(location, TextDisplay.class, textDisplay -> textDisplay.setPersistent(false));
+        this.textDisplayEntity = location.getWorld().spawn(location, TextDisplay.class, textDisplay -> {
+            textDisplay.setPersistent(false);
+            textDisplay.setVisibleByDefault(!hiddenFromPlayers);
+
+            if (hiddenFromPlayers && owner != null) {
+                owner.showEntity(plugin, textDisplay);
+            }
+        });
+    }
+
+    public void showToPlayer(UUID playerUUID) {
+        Player player = Bukkit.getPlayer(playerUUID);
+        if (player != null && player.isOnline()) {
+            Plugin plugin = parentMenu.getPlugin();
+            player.showEntity(plugin, interactionEntity);
+            player.showEntity(plugin, textDisplayEntity);
+        }
+    }
+
+    public void showToPlayers(ArrayList<UUID> playerUUIDs) {
+        Plugin plugin = parentMenu.getPlugin();
+        for (UUID uuid : playerUUIDs) {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null && player.isOnline()) {
+                player.showEntity(plugin, interactionEntity);
+                player.showEntity(plugin, textDisplayEntity);
+            }
+        }
     }
 
     public void updateLocation(Location startLocation) {
@@ -73,7 +114,6 @@ public abstract class Element implements IElement {
     }
 
     protected Vector getAdjustedOffset(Vector offset, float yaw) {
-        // No yaw normalization; handle yaw directly as needed.
         double radians = Math.toRadians(yaw);
 
         double cos = Math.cos(radians);

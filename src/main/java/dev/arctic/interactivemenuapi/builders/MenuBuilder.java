@@ -5,12 +5,16 @@ import dev.arctic.interactivemenuapi.objects.Menu;
 import org.bukkit.Location;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Builder class for constructing a Menu.
+ */
 public class MenuBuilder {
 
     private Location rootLocation;
@@ -84,7 +88,14 @@ public class MenuBuilder {
     }
 
     public Menu build() {
-        // Automatically create the anchor entity if it hasn't been set
+
+        //verify that the owner does not have an existing menu
+        if (!owner.getMetadata("InteractiveMenu").isEmpty()) {
+            Menu oldmenu = (Menu) owner.getMetadata("InteractiveMenu").get(0);
+            oldmenu.cleanup();
+        }
+
+        //create the anchor entity if not set explicitly
         if (this.anchorEntity == null && this.rootLocation != null) {
             this.anchorEntity = createAnchor(new Vector(0, 0, 0));
         }
@@ -98,6 +109,9 @@ public class MenuBuilder {
         menu.setMenuUUID(menuUUID);
         menu.setLastInteractionTime(System.currentTimeMillis());
         menu.setDoCleanup(doCleanup);
+
+        owner.setMetadata("InteractiveMenu", new FixedMetadataValue(plugin, menu));
+
         return menu;
     }
 }

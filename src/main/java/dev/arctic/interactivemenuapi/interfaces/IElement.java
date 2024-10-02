@@ -4,6 +4,9 @@ import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 
 /**
@@ -79,4 +82,18 @@ public interface IElement {
      * @param input The input object related to the interaction.
      */
     void doExternalFunction(Player player, Object input);
+
+    /**
+     * Shows the element entities to a single player based on their UUID.
+     *
+     * @param playerUUID The UUID of the player to whom the entities should be shown.
+     */
+    void showToPlayer(UUID playerUUID);
+
+    /**
+     * Shows the element entities to multiple players based on their UUIDs.
+     *
+     * @param playerUUIDs A list of UUIDs of players to whom the entities should be shown.
+     */
+    void showToPlayers(ArrayList<UUID> playerUUIDs);
 }
