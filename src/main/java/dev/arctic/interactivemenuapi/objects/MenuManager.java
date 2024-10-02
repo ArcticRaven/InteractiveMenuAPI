@@ -35,7 +35,9 @@ public class MenuManager {
      */
     public static void cleanupMenus() {
         for (Menu menu : new ArrayList<>(ActiveMenus)) {
-            menu.cleanup();
+            if (menu != null) {
+                menu.cleanup();
+            }
         }
         ActiveMenus.clear();
     }
@@ -47,8 +49,7 @@ public class MenuManager {
         long currentTime = System.currentTimeMillis();
 
         for (Menu menu : new ArrayList<>(ActiveMenus)) {
-            if (menu.isDoCleanup() &&
-                    currentTime - menu.getLastInteractionTime() > menu.getTimeoutSeconds() * 1000L) {
+            if (menu != null && menu.isDoCleanup() && currentTime - menu.getLastInteractionTime() > menu.getTimeoutSeconds()) {
                 menu.cleanup();
                 removeMenu(menu);
             }

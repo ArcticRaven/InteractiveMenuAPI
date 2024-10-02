@@ -49,9 +49,10 @@ public abstract class Element implements IElement {
         this.interactionEntity = location.getWorld().spawn(location, Interaction.class, interaction -> {
             interaction.setPersistent(false);
             interaction.setMetadata("InteractiveMenu", new FixedMetadataValue(plugin, this));
-            interaction.setVisibleByDefault(hiddenFromPlayers);
 
-            if (hiddenFromPlayers && owner != null) {
+
+            if (hiddenFromPlayers) {
+                interaction.setVisibleByDefault(false);
                 owner.showEntity(plugin, interaction);
             }
         });
@@ -60,7 +61,8 @@ public abstract class Element implements IElement {
             textDisplay.setPersistent(false);
             textDisplay.setVisibleByDefault(hiddenFromPlayers);
 
-            if (hiddenFromPlayers && owner != null) {
+            if (hiddenFromPlayers) {
+                textDisplay.setVisibleByDefault(false);
                 owner.showEntity(plugin, textDisplay);
             }
         });
