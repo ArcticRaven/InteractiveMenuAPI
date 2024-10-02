@@ -23,7 +23,6 @@ public class Menu implements IMenu {
     protected Player owner;
     protected Interaction anchorEntity;
     protected BukkitTask updateTask;
-    protected BukkitTask cleanupTask;
     private Plugin plugin;
     protected List<Division> divisions = new CopyOnWriteArrayList<>();
     protected List<Object> objectStorage = new CopyOnWriteArrayList<>();
@@ -81,7 +80,6 @@ public class Menu implements IMenu {
         anchorEntity.remove();
 
         updateTask.cancel();
-        cleanupTask.cancel();
 
         owner.getMetadata("InteractiveMenu").clear();
 
