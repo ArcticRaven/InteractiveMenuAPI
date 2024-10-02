@@ -1,13 +1,17 @@
 package dev.arctic.interactivemenuapi.objects;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 
 public class MenuManager {
 
     private static final ArrayList<Menu> ActiveMenus = new ArrayList<>();
+    @Getter
+    static BukkitTask CleanupTask;
 
     /**
      * Adds a menu to the list of active menus.
@@ -56,6 +60,6 @@ public class MenuManager {
      * @param plugin The plugin instance to schedule the task with.
      */
     public static void startCleanupTask(Plugin plugin) {
-        Bukkit.getScheduler().runTaskTimer(plugin, MenuManager::cleanupExpiredMenus, 20L, 20L);
+        CleanupTask = Bukkit.getScheduler().runTaskTimer(plugin, MenuManager::cleanupExpiredMenus, 20L, 20L);
     }
 }
