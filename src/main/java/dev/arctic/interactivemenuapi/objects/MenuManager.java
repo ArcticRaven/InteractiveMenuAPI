@@ -22,6 +22,7 @@ public class MenuManager {
 
     public static void removeMenu(Menu menu) {
         ActiveMenus.remove(menu);
+        menu.cleanup();
     }
 
     public static Menu getMenu(UUID menuUUID) {
@@ -47,13 +48,12 @@ public class MenuManager {
 
         for (Menu menu : new HashSet<>(ActiveMenus)) {
             if (menu != null && menu.isDoCleanup() && currentTime - menu.getLastInteractionTime() > menu.getTimeoutSeconds() * 1000L) {
-                menu.cleanup();
                 removeMenu(menu);
             }
         }
     }
 
     public static void startCleanupTask(Plugin plugin) {
-        CleanupTask = Bukkit.getScheduler().runTaskTimer(plugin, MenuManager::cleanupExpiredMenus, 20L, 20L);
+        CleanupTask = Bukkit.getScheduler().runTaskTimer(plugin, MenuManager::cleanupExpiredMenus, 40L, 40L);
     }
 }
