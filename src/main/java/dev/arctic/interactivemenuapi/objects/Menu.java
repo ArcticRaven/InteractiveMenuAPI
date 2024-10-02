@@ -51,13 +51,6 @@ public class Menu implements IMenu {
 
     public void initializeMenu() {
         startRunnableUpdateGUI();
-        startCleanupTask();
-    }
-
-
-    private boolean isTimeoutExceeded() {
-        return (System.currentTimeMillis() / 1000 - this.lastInteractionTime) >= this.timeoutSeconds;
-
     }
 
     public void updateMenuLocation() {
@@ -75,18 +68,6 @@ public class Menu implements IMenu {
         }.runTaskTimer(plugin, 2L, 5L); // Update every 5 ticks
     }
 
-    public void startCleanupTask() {
-           cleanupTask = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (doCleanup && isTimeoutExceeded()) {
-                        cleanup();
-                        this.cancel();
-                    }
-                }
-            }.runTaskTimer(plugin, 2L, 20L); // Check every second
-        }
-
     public void clearMenu() {
         for (Division division : divisions) {
             division.cleanup();
@@ -101,6 +82,8 @@ public class Menu implements IMenu {
 
         updateTask.cancel();
         cleanupTask.cancel();
+
+        owner.getMetadata("InteractiveMenu").clear();
 
         MenuManager.removeMenu(this);
     }

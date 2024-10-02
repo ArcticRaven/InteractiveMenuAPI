@@ -92,7 +92,9 @@ public class MenuBuilder {
         //verify that the owner does not have an existing menu
         if (!owner.getMetadata("InteractiveMenu").isEmpty()) {
             Menu oldmenu = (Menu) owner.getMetadata("InteractiveMenu").get(0);
-            oldmenu.cleanup();
+            if (oldmenu != null) {
+                oldmenu.cleanup();
+            }
         }
 
         //create the anchor entity if not set explicitly

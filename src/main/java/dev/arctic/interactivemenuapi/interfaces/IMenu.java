@@ -42,11 +42,6 @@ public interface IMenu {
     void startRunnableUpdateGUI();
 
     /**
-     * Starts the cleanup task, which checks for menu timeout and cleans up if necessary.
-     */
-    void startCleanupTask();
-
-    /**
      * Clears all divisions and elements from the menu.
      */
     void clearMenu();
