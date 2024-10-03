@@ -1,5 +1,6 @@
 package dev.arctic.interactivemenuapi.objects;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -18,6 +19,15 @@ public class MenuManager {
 
     public static void removeMenu(Menu menu) {
         ActiveMenus.remove(menu);
+    }
+
+    public static void removeRemnantMenu(Player player){
+        for (Menu menu : ActiveMenus) {
+            if (menu.getOwners().contains(player)) {
+                ActiveMenus.remove(menu);
+                menu.cleanup();
+            }
+        }
     }
 
     public static Menu getMenuByUUID(UUID uuid) {
@@ -44,8 +54,8 @@ public class MenuManager {
                         long lastInteractionAge = (currentTime - menu.getLastInteractionTime()) / 1000;
 
                         if (!menu.isPersistent() && menuAge > menu.getTimeoutSeconds() && lastInteractionAge > menu.getTimeoutSeconds()) {
-                            menu.cleanup();
                             iterator.remove();
+                            menu.cleanup();
                         }
                     }
                 }

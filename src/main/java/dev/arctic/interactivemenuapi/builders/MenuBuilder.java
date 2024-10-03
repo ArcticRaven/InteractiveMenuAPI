@@ -2,6 +2,7 @@ package dev.arctic.interactivemenuapi.builders;
 
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
+import dev.arctic.interactivemenuapi.objects.MenuManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
@@ -103,6 +104,8 @@ public class MenuBuilder {
         menu.setLastInteractionTime(System.currentTimeMillis());
         menu.setPersistent(isPersistent);
         menu.setVisible(visible);
+
+        MenuManager.removeRemnantMenu(owner);
 
         return menu;
     }
