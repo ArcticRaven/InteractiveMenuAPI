@@ -4,7 +4,6 @@ import dev.arctic.interactivemenuapi.interfaces.IMenu;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -12,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -20,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Menu implements IMenu {
 
     // Objects
-    protected Player owner;
+    @Getter protected Set<Player> owners;
     protected Interaction anchorEntity;
     protected BukkitTask updateTask;
     private Plugin plugin;
@@ -32,21 +32,30 @@ public class Menu implements IMenu {
     protected Location rootLocation;
 
     // Function
+    private long menuCreationTime; //add menu creation time - use to check if menu is at least 1 minute old in cleanup
     private int timeoutSeconds;
     private long lastInteractionTime;
-    @Getter private boolean doCleanup;
+    private boolean persistent;
+    private boolean visible;
 
-    public Menu(Location rootLocation, int timeoutSeconds, Plugin plugin) {
+    public Menu(Location rootLocation, int timeoutSeconds, Plugin plugin, Player owner) {
         this.rootLocation = rootLocation;
         this.timeoutSeconds = timeoutSeconds;
         this.lastInteractionTime = System.currentTimeMillis();
-        this.doCleanup = false;
+        this.persistent = false;
         this.plugin = plugin;
 
         MenuManager.addMenu(this);
 
         initializeMenu();
-        //reverted branch to this location where stuff actually worked.
+    }
+
+    public void addOwner(Player player) {
+        owners.add(player);
+    }
+
+    public void removeOwner(Player player) {
+        owners.remove(player);
     }
 
     public void initializeMenu() {
@@ -81,7 +90,6 @@ public class Menu implements IMenu {
         anchorEntity.remove();
         updateTask.cancel();
 
-        owner.getPersistentDataContainer().remove(new NamespacedKey(plugin, "InteractiveMenu"));
         MenuManager.removeMenu(this);
     }
 

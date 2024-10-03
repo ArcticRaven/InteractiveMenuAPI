@@ -2,15 +2,13 @@ package dev.arctic.interactivemenuapi.builders;
 
 import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
-import dev.arctic.interactivemenuapi.objects.MenuManager;
 import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,10 +19,11 @@ public class MenuBuilder {
     private Player owner;
     private Interaction anchorEntity;
     private Plugin plugin;
-    private List<Division> divisions;
+    private List<Division> divisions = new ArrayList<>();
     private UUID menuUUID;
     private long lastInteractionTime;
-    private boolean doCleanup;
+    private boolean isPersistent;
+    private boolean visible;
 
     public MenuBuilder setRootLocation(Location rootLocation) {
         this.rootLocation = rootLocation;
@@ -71,8 +70,13 @@ public class MenuBuilder {
         return this;
     }
 
-    public MenuBuilder setDoCleanup(boolean doCleanup) {
-        this.doCleanup = doCleanup;
+    public MenuBuilder setPersistent(boolean isPersistent) {
+        this.isPersistent = isPersistent;
+        return this;
+    }
+
+    public MenuBuilder setVisible(boolean visible) {
+        this.visible = visible;
         return this;
     }
 
@@ -87,32 +91,18 @@ public class MenuBuilder {
     }
 
     public Menu build() {
-        NamespacedKey menuUUIDKey = new NamespacedKey(plugin, "MENU_UUID");
-        if (owner.getPersistentDataContainer().has(menuUUIDKey, PersistentDataType.STRING)) {
-            String uuidString = owner.getPersistentDataContainer().get(menuUUIDKey, PersistentDataType.STRING);
-            UUID existingUUID = UUID.fromString(uuidString);
-
-            Menu existingMenu = MenuManager.getMenuByUUID(existingUUID);
-
-            if (existingMenu != null) {
-                existingMenu.cleanup();
-            }
-        }
-
         if (this.anchorEntity == null && this.rootLocation != null) {
             this.anchorEntity = createAnchor(new Vector(0, 0, 0));
         }
 
-        Menu menu = new Menu(rootLocation, timeoutSeconds, plugin);
-        menu.setOwner(owner);
+        Menu menu = new Menu(rootLocation, timeoutSeconds, plugin, owner);
         menu.setAnchorEntity(anchorEntity);
         menu.setPlugin(plugin);
         menu.setDivisions(divisions);
         menu.setMenuUUID(menuUUID);
         menu.setLastInteractionTime(System.currentTimeMillis());
-        menu.setDoCleanup(doCleanup);
-
-        owner.getPersistentDataContainer().set(menuUUIDKey, PersistentDataType.STRING, menuUUID.toString());
+        menu.setPersistent(isPersistent);
+        menu.setVisible(visible);
 
         return menu;
     }

@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -51,18 +52,25 @@ public interface IMenu {
     void cleanup();
 
     /**
-     * Gets the player who owns this menu.
+     * Adds a player as an owner of this menu.
      *
-     * @return The player who owns the menu.
+     * @param player The player to add as an owner.
      */
-    Player getOwner();
+    void addOwner(Player player);
 
     /**
-     * Sets the player who owns this menu.
+     * Removes a player from the owners of this menu.
      *
-     * @param owner The player who owns the menu.
+     * @param player The player to remove from owners.
      */
-    void setOwner(Player owner);
+    void removeOwner(Player player);
+
+    /**
+     * Gets the players who own this menu.
+     *
+     * @return A set of players who own the menu.
+     */
+    Set<Player> getOwners();
 
     /**
      * Gets the anchor entity used by this menu.
@@ -86,7 +94,7 @@ public interface IMenu {
     Plugin getPlugin();
 
     /**
-     * Sets the plugin associated with this menu.
+     * Sets the plugin that owns this menu.
      *
      * @param plugin The plugin.
      */
@@ -170,16 +178,44 @@ public interface IMenu {
     void setLastInteractionTime(long lastInteractionTime);
 
     /**
-     * Checks whether cleanup is enabled for this menu.
+     * Gets the menu creation time.
      *
-     * @return True if cleanup is enabled, false otherwise.
+     * @return The menu creation time in milliseconds.
      */
-    boolean isDoCleanup();
+    long getMenuCreationTime();
 
     /**
-     * Sets whether cleanup is enabled for this menu.
+     * Sets the menu creation time.
      *
-     * @param doCleanup True if cleanup should be enabled, false otherwise.
+     * @param menuCreationTime The menu creation time in milliseconds.
      */
-    void setDoCleanup(boolean doCleanup);
+    void setMenuCreationTime(long menuCreationTime);
+
+    /**
+     * Checks whether the menu is persistent.
+     *
+     * @return True if the menu is persistent, false otherwise.
+     */
+    boolean isPersistent();
+
+    /**
+     * Sets whether the menu is persistent.
+     *
+     * @param persistent True if the menu should be persistent, false otherwise.
+     */
+    void setPersistent(boolean persistent);
+
+    /**
+     * Checks whether the menu is visible to non-owners.
+     *
+     * @return True if the menu is visible to non-owners, false otherwise.
+     */
+    boolean isVisible();
+
+    /**
+     * Sets whether the menu is visible to non-owners.
+     *
+     * @param visible True if the menu should be visible to non-owners, false otherwise.
+     */
+    void setVisible(boolean visible);
 }
