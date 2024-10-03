@@ -20,7 +20,7 @@ public class MenuBuilder {
     private Player owner;
     private Interaction anchorEntity;
     private Plugin plugin;
-    private List<Division> divisions = new ArrayList<>();
+    private List<Division> divisions;
     private UUID menuUUID;
     private long lastInteractionTime;
     private boolean isPersistent;
