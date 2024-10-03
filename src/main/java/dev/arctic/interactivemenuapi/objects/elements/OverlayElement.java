@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.bukkit.scheduler.BukkitRunnable;
 
-
 public class OverlayElement extends Element implements IOverlayElement {
 
     private boolean interactToRemove;
@@ -21,6 +20,7 @@ public class OverlayElement extends Element implements IOverlayElement {
         this.interactToRemove = interactToRemove;
         this.displayDuration = displayDuration;
         this.text = text;
+        setText(text);
 
         if (displayDuration > 0) {
             startDisplayTimer();
@@ -43,10 +43,18 @@ public class OverlayElement extends Element implements IOverlayElement {
         }
     }
 
-    public void setText(){
-        textDisplayEntity.text(text);
+    @Override
+    public void setText(Component text) {
+        this.text = text;
+        if (textDisplayEntity != null) {
+            textDisplayEntity.text(text);
+        }
     }
 
+    @Override
+    public Component getText() {
+        return this.text;
+    }
 
     @Override
     public Location getCurrentLocation() {
@@ -76,10 +84,5 @@ public class OverlayElement extends Element implements IOverlayElement {
     @Override
     public void setDisplayDuration(long displayDuration) {
         this.displayDuration = displayDuration;
-    }
-
-    @Override
-    public void setText(Component text) {
-        textDisplayEntity.text(text);
     }
 }

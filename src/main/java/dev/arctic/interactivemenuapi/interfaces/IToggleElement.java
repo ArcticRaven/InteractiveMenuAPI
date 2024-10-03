@@ -42,17 +42,19 @@ public interface IToggleElement extends IElement {
     void storeSecondaryText(Component secondaryText);
 
     /**
-     * Applies the primary text to the TextDisplayEntity.
+     * Applies the primary text content to the TextDisplayEntity.
      */
-    void setPrimaryText();
+    void setPrimaryTextContent();
 
     /**
-     * Applies the secondary text to the TextDisplayEntity.
+     * Applies the secondary text content to the TextDisplayEntity.
      */
-    void setSecondaryText();
+    void setSecondaryTextContent();
 
     /**
      * Applies the animation for the toggle element based on its current state.
+     *
+     * @param duration The duration of the animation in ticks.
      */
     void applyAnimation(int duration);
 }

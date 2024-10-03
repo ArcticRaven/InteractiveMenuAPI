@@ -26,7 +26,7 @@ public class ToggleElement extends Element implements IToggleElement {
         storePrimaryText(primaryText);
         storeSecondaryText(secondaryText);
         this.duration = duration;
-        setPrimaryText();
+        setPrimaryTextContent();
     }
 
     @Override
@@ -37,14 +37,16 @@ public class ToggleElement extends Element implements IToggleElement {
         }
     }
 
-    @Override
-    public void setPrimaryText() {
-        textDisplayEntity.text(primaryText);
+    public void setPrimaryTextContent() {
+        if (textDisplayEntity != null && primaryText != null) {
+            textDisplayEntity.text(primaryText);
+        }
     }
 
-    @Override
-    public void setSecondaryText() {
-        textDisplayEntity.text(secondaryText);
+    public void setSecondaryTextContent() {
+        if (textDisplayEntity != null && secondaryText != null) {
+            textDisplayEntity.text(secondaryText);
+        }
     }
 
     @Override
@@ -60,6 +62,11 @@ public class ToggleElement extends Element implements IToggleElement {
     @Override
     public void toggle() {
         isPressed = !isPressed;
+        if (isPressed) {
+            setSecondaryTextContent();
+        } else {
+            setPrimaryTextContent();
+        }
     }
 
     @Override
@@ -70,22 +77,27 @@ public class ToggleElement extends Element implements IToggleElement {
     @Override
     public void setPressed(boolean pressed) {
         isPressed = pressed;
+        if (isPressed) {
+            setSecondaryTextContent();
+        } else {
+            setPrimaryTextContent();
+        }
     }
 
     @Override
     public void applyAnimation(int duration) {
         if (pressAnimationType == AnimationType.PRESSED) {
             if (isPressed) {
-                setSecondaryText();
+                setSecondaryTextContent();
             } else {
-                setPrimaryText();
+                setPrimaryTextContent();
             }
         }
     }
 
     @Override
     public Location getCurrentLocation() {
-        return null;
+        return location;
     }
 
     @Override

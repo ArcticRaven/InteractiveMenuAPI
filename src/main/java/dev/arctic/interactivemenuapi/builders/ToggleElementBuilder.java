@@ -49,12 +49,12 @@ public class ToggleElementBuilder {
         return this;
     }
 
-    public ToggleElementBuilder storePrimaryText(Component primaryText) {
+    public ToggleElementBuilder setPrimaryText(Component primaryText) {
         this.primaryText = primaryText;
         return this;
     }
 
-    public ToggleElementBuilder storeSecondaryText(Component secondaryText) {
+    public ToggleElementBuilder setSecondaryText(Component secondaryText) {
         this.secondaryText = secondaryText;
         return this;
     }
@@ -65,6 +65,13 @@ public class ToggleElementBuilder {
     }
 
     public ToggleElement build() {
-        return new ToggleElement(parentMenu, parentDivision, offset, visible, pressAnimationType, pressAnimationStepper, primaryText, secondaryText, duration);
+        ToggleElement toggleElement = new ToggleElement(parentMenu, parentDivision, offset, visible, pressAnimationType, pressAnimationStepper, primaryText, secondaryText, duration);
+        if (primaryText != null) {
+            toggleElement.setPrimaryTextContent();
+        }
+        if (secondaryText != null) {
+            toggleElement.setSecondaryTextContent();
+        }
+        return toggleElement;
     }
 }

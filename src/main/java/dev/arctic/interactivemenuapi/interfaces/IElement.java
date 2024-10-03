@@ -4,8 +4,9 @@ import dev.arctic.interactivemenuapi.objects.Division;
 import dev.arctic.interactivemenuapi.objects.Menu;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
@@ -91,9 +92,31 @@ public interface IElement {
     void showToPlayer(UUID playerUUID);
 
     /**
-     * Shows the element entities to multiple players based on their UUIDs.
+     * Shows the element entities to multiple players based on their Player set.
      *
-     * @param playerUUIDs A list of UUIDs of players to whom the entities should be shown.
+     * @param players A set of players to whom the entities should be shown.
      */
-    void showToPlayers(ArrayList<UUID> playerUUIDs);
+    void showToPlayers(Set<Player> players);
+
+    /**
+     * Sets whether the element is visible to players.
+     *
+     * @param isVisible True if the element should be visible, false otherwise.
+     */
+    void setVisible(boolean isVisible);
+
+    /**
+     * Checks if the element is visible to players.
+     *
+     * @return True if the element is visible, false otherwise.
+     */
+    boolean isVisible();
+
+    /**
+     * Sets the width and height of the interaction entity.
+     *
+     * @param width The width of the interaction entity.
+     * @param height The height of the interaction entity.
+     */
+    void setInteractionEntitySize(double width, double height);
 }

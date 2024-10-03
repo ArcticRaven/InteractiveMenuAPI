@@ -2,10 +2,11 @@ package dev.arctic.interactivemenuapi.interfaces;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Display;
 
 /**
  * Interface representing a Display Element in the Interactive Menu API.
- * Display Elements show a single ItemStack.
+ * Display Elements show a single ItemStack and provide customization options.
  */
 public interface IDisplayElement extends IElement {
 
@@ -43,4 +44,33 @@ public interface IDisplayElement extends IElement {
      * @param newItem The new ItemStack to display.
      */
     void changeDisplayItem(ItemStack newItem);
+
+    /**
+     * Sets the transformation matrix of the item display entity.
+     *
+     * @param transformation The transformation to be applied.
+     */
+    void setTransformation(Display.Billboard transformation);
+
+    /**
+     * Sets the brightness of the item display entity.
+     *
+     * @param brightness The brightness to be set.
+     */
+    void setBrightness(Display.Brightness brightness);
+
+    /**
+     * Sets the shadow radius and strength for the display entity.
+     *
+     * @param shadowRadius  The shadow radius.
+     * @param shadowStrength The shadow strength.
+     */
+    void setShadow(float shadowRadius, float shadowStrength);
+
+    /**
+     * Sets the view range of the item display entity.
+     *
+     * @param viewRange The view range to be set.
+     */
+    void setViewRange(float viewRange);
 }

@@ -42,4 +42,11 @@ public interface IOverlayElement extends IElement {
      * @param text The text to display.
      */
     void setText(Component text);
+
+    /**
+     * Gets the current text of the overlay element.
+     *
+     * @return The current text.
+     */
+    Component getText();
 }

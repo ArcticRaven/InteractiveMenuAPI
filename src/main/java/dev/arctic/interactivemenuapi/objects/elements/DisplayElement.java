@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Display;
 
 /**
  * Represents a display element in the interactive menu.
@@ -38,7 +39,7 @@ public class DisplayElement extends Element implements IDisplayElement {
     private void initializeDisplayItem() {
         displayEntity = location.getWorld().spawn(location, ItemDisplay.class, item -> {
             item.setItemStack(displayItem);
-            item.setPersistent(false);
+            item.setPersistent(parentMenu.isPersistent());
         });
     }
 
@@ -61,12 +62,6 @@ public class DisplayElement extends Element implements IDisplayElement {
     public void setDisplayItem(ItemStack displayItem) {
         this.displayItem = displayItem;
         displayEntity.setItemStack(displayItem);
-    }
-
-    @Override
-    public void cleanup() {
-        super.cleanup();
-        displayEntity.remove();
     }
 
     /**
@@ -129,14 +124,59 @@ public class DisplayElement extends Element implements IDisplayElement {
         super.location = currentLocation;
     }
 
-
     @Override
     public void updateLocation(Location startLocation) {
         Location newLocation = startLocation.clone().add(getAdjustedOffset(offset, startLocation.getYaw()));
 
         interactionEntity.teleport(newLocation);
-        displayEntity.teleport(newLocation.add(0,0.5,0));
+        displayEntity.teleport(newLocation.add(0, 0.5, 0));
 
         this.location = newLocation;
+    }
+
+    /**
+     * Sets the transformation matrix of the item display entity.
+     *
+     * @param transformation The transformation to be applied.
+     */
+    public void setTransformation(Display.Billboard transformation) {
+        if (displayEntity != null) {
+            displayEntity.setBillboard(transformation);
+        }
+    }
+
+    /**
+     * Sets the brightness of the item display entity.
+     *
+     * @param brightness The brightness to be set.
+     */
+    public void setBrightness(Display.Brightness brightness) {
+        if (displayEntity != null) {
+            displayEntity.setBrightness(brightness);
+        }
+    }
+
+    /**
+     * Sets the shadow radius and strength for the display entity.
+     *
+     * @param shadowRadius  The shadow radius.
+     * @param shadowStrength The shadow strength.
+     */
+    public void setShadow(float shadowRadius, float shadowStrength) {
+        if (displayEntity != null) {
+            displayEntity.setShadowRadius(shadowRadius);
+            displayEntity.setShadowStrength(shadowStrength);
+        }
+    }
+
+    /**
+     * Sets the view range of the item display entity.
+     *
+     * @param viewRange The view range to be set.
+     */
+    public void setViewRange(float viewRange) {
+        if (displayEntity != null) {
+            displayEntity.setViewRange(viewRange);
+        }
     }
 }
