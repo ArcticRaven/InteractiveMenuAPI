@@ -47,6 +47,7 @@ public class Menu implements IMenu {
         MenuManager.addMenu(this);
 
         initializeMenu();
+        //reverted branch to this location where stuff actually worked.
     }
 
     public void initializeMenu() {
