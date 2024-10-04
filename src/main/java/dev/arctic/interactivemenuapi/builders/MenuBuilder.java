@@ -58,11 +58,14 @@ public class MenuBuilder {
         return this;
     }
 
-
     public MenuBuilder addDivision(Division division) {
+        if (this.divisions == null) {
+            this.divisions = new CopyOnWriteArrayList<>();
+        }
         this.divisions.add(division);
         return this;
     }
+
 
     public MenuBuilder setMenuUUID(UUID menuUUID) {
         this.menuUUID = menuUUID;
@@ -97,6 +100,10 @@ public class MenuBuilder {
     public Menu build() {
         if (this.anchorEntity == null && this.rootLocation != null) {
             this.anchorEntity = createAnchor(new Vector(0, 0, 0));
+        }
+
+        if (this.divisions == null) {
+            this.divisions = new CopyOnWriteArrayList<>();
         }
 
         Menu menu = new Menu(rootLocation, timeoutSeconds, plugin, owner);
