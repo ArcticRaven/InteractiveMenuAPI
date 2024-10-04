@@ -12,6 +12,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MenuBuilder {
 
@@ -52,9 +53,11 @@ public class MenuBuilder {
     }
 
     public MenuBuilder setDivisions(List<Division> divisions) {
-        this.divisions = divisions;
+        // Initialize to an empty list if the provided list is null
+        this.divisions = (divisions != null) ? new CopyOnWriteArrayList<>(divisions) : new CopyOnWriteArrayList<>();
         return this;
     }
+
 
     public MenuBuilder addDivision(Division division) {
         this.divisions.add(division);
